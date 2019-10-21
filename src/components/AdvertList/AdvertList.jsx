@@ -1,15 +1,35 @@
 import React from "react";
 
+import Advert from '../Advert/Advert';
+
 export default class AdvertList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.log('Adverts on AdvertList ', this.props.adverts);
   }
 
+  buildAdvertList = adverts => {
+    return (
+      <div className="row">
+        {
+          adverts.map(advert => <Advert advert={advert} />)
+        }
+      </div>
+    )
+  };
+
   render() {
+    const adverts = this.props.adverts.results;
     return (
       <div>
-        <h1>AdvertList component</h1>
+        {
+          adverts
+          &&
+          adverts.length
+          && 
+          this.buildAdvertList(adverts)
+        }
       </div>
     );
   }
