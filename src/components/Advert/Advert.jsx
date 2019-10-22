@@ -24,7 +24,7 @@ class Advert extends React.Component {
         <p>{advert.price} €</p>
         <p>{advert.type}</p>
         <div>
-          {advert.tags.map( tag => <span className={`badge badge-${tag}`}>{tag} </span>)}
+          {advert.tags.map( tag => <span key={`${advert.id}_${tag}`} className={`badge badge-${tag}`}>{tag} </span>)}
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ export default class Tags extends React.Component {
 
     renderTags = tags => {
         return (
-            tags.map( tag => <option>{tag}</option>) 
+            tags.map( tag => <option key={tag} value={tag}>{tag}</option>) 
         );
     }
 
@@ -38,8 +38,8 @@ export default class Tags extends React.Component {
                 {
                 tags
                 &&
-                <select name="" id="" onChange={this.onChange}>
-                    <option selected disabled>Select a tag</option>
+                <select defaultValue="DEFAULT" onChange={this.onChange}>
+                    <option value="DEFAULT" disabled>Select a tag</option>
                     { this.renderTags(tags) }
                 </select>
                 }
