@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import EditAdvert from '../EditAdvert/EditAdvert';
 import AdvertDetail from '../AdvertDetail/AdvertDetail';
-import Register from '../Register/Register';
+import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Home from '../Home/Home';
@@ -26,7 +26,7 @@ export default class App extends React.Component {
     }
   }
 
-  onUserRegister = user => {
+  onUserLogin = user => {
     this.setState({ user });
   };
 
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     const isUserLogged = this.state.user.firstname !== '';
     if(!isUserLogged) {
       console.log(JSON.parse(userOnLocalStorage));
-      this.onUserRegister(JSON.parse(userOnLocalStorage));
+      this.onUserLogin(JSON.parse(userOnLocalStorage));
     }
 
     return true;
@@ -47,7 +47,7 @@ export default class App extends React.Component {
   render() {
     const value = {
       user: this.state.user,
-      onSubmit: this.onUserRegister
+      onSubmit: this.onUserLogin
     };
 
     return (  
@@ -59,7 +59,7 @@ export default class App extends React.Component {
               &&
               <React.Fragment>
                 <p>no estas logueado !!</p>
-                <Route component={Register} />
+                <Route component={Login} />
               </React.Fragment>
             }
             {
@@ -69,7 +69,7 @@ export default class App extends React.Component {
                 <Navbar/>
 
                 <Switch>
-                  <Route path="/register" component={Register} />
+                  <Route path="/login" component={Login} />
                   <Route path="/profile" component={Profile} />
                   <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
                   <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
