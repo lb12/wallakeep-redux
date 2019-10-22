@@ -34,13 +34,18 @@ export default class Tags extends React.Component {
     render(){
         const { tags } = this.state;
         const multipleSelect = this.props.multiple ? 'multiple' : '';
+        const defaultValue = this.props.multiple ? [] : 'DEFAULT';
         return (
             <div>
                 {
                 tags
                 &&
-                <select defaultValue="DEFAULT" multiple={multipleSelect} onChange={this.onChange}>
-                    <option value="DEFAULT" disabled>Select a tag</option>
+                <select defaultValue={defaultValue} multiple={multipleSelect} onChange={this.onChange}>
+                    {
+                        !multipleSelect
+                        &&
+                        <option value="DEFAULT" disabled>Select a tag</option>
+                    }
                     { this.renderTags(tags) }
                 </select>
                 }
