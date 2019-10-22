@@ -4,7 +4,7 @@ import UserContext from "../../contexts/UserContext";
 
 
 
-export default class Register extends React.Component {
+export default class Login extends React.Component {
   constructor(props, context) {
     super(props, context);
     
@@ -17,6 +17,7 @@ export default class Register extends React.Component {
     evt && evt.preventDefault();
 
     console.log(this.state.user);
+    localStorage.setItem('user', JSON.stringify(this.state.user));
     this.context.onSubmit(this.state.user);
   };
 
@@ -67,10 +68,10 @@ export default class Register extends React.Component {
             <p>Tag</p>
             <Tags onTagSelected={this.onTagSelected} />
           </div>
-          <button type="submit">Registrar</button>
+          <button type="submit">Log in</button>
         </form>
       </div>
     );
   }
 }
-Register.contextType = UserContext;
+Login.contextType = UserContext;

@@ -30,19 +30,32 @@ export default class App extends React.Component {
     this.setState({ user });
   };
 
+  isUserLogged = () => {
+    const userOnLocalStorage = localStorage.getItem('user');
+
+    if ( !userOnLocalStorage) return false;
+
+    const isUserLogged = this.state.user.firstname !== '';
+    if(!isUserLogged) {
+      console.log(JSON.parse(userOnLocalStorage));
+      this.onUserRegister(JSON.parse(userOnLocalStorage));
+    }
+
+    return true;
+  };
+
   render() {
     const value = {
       user: this.state.user,
       onSubmit: this.onUserRegister
     };
-    const isUserLogged = this.state.user.firstname !== '';
 
     return (  
       <div>
         <UserContext.Provider value={value}>        
           <Router>
             {
-              !isUserLogged
+              !this.isUserLogged()
               &&
               <React.Fragment>
                 <p>no estas logueado !!</p>
@@ -50,7 +63,7 @@ export default class App extends React.Component {
               </React.Fragment>
             }
             {
-              isUserLogged
+              this.isUserLogged()
               &&
               <React.Fragment>              
                 <Navbar/>

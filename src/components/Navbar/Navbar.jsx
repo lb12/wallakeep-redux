@@ -8,6 +8,13 @@ export default class Navbar extends React.Component {
     this.state = {};
   }
 
+  logout = evt => {
+    evt && evt.preventDefault();
+
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+
   render() {
     return (
       <div style={{backgroundColor: 'aqua'}}>
@@ -16,6 +23,7 @@ export default class Navbar extends React.Component {
           <li><Link to="/create-advert">Create advert</Link></li>
           <li><Link to="/profile">Profile</Link></li>
         </ul>
+        <button onClick={this.logout}>Logout</button>
       </div>
     );
   }
