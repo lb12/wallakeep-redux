@@ -8,30 +8,22 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: {
-        name: "",
-        price: "",
-        tag: "",
-        type: ""
-      },
       adverts: []
     };
-  }
 
-  onSubmitFilters = filters => {
-    this.setState({filters}, () => this.searchAdverts(filters));
-  };
+    this.searchAdverts({});
+  }
 
   searchAdverts = async filters => {
     const adverts = await API.listAdverts(filters, 10, 1);
-    this.setState({adverts}, () => console.log(this.state));
+    this.setState({adverts});
   };
 
   render() {
     const { adverts } = this.state;
     return (
       <div>
-        <Filters onSubmit={this.onSubmitFilters} />
+        <Filters onSubmit={this.searchAdverts} />
         <hr />
         <AdvertList adverts={adverts}/>
       </div>

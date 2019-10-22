@@ -25,13 +25,13 @@ const putRequest = (url, data) => {
 /**
  * GET all adverts filtering and using pagination
  */
-const listAdverts = async ({name, price, tag, type}, adsPerPage, page) => {
+const listAdverts = async ({name, price, tag, selling}, adsPerPage, page) => {
     let queryParams = '';
 
     if (name && name.length) queryParams += (`${getQueryParamToken(queryParams)}name=${name}`); 
     if (price && price.length) queryParams += (`${getQueryParamToken(queryParams)}price=${price}`); 
     if (tag && tag.length) queryParams += (`${getQueryParamToken(queryParams)}tag=${tag}`); 
-    if (type && type.length) queryParams += (`${getQueryParamToken(queryParams)}type=${type}`);
+    if (selling && selling.length) queryParams += (`${getQueryParamToken(queryParams)}venta=${selling}`);
 
     queryParams += `${getQueryParamToken(queryParams)}limit=${adsPerPage}`;
     queryParams += page > 1 ? (`${getQueryParamToken(queryParams)}skip=${--page * adsPerPage}`) : '';
