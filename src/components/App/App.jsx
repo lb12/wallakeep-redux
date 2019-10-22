@@ -35,21 +35,37 @@ export default class App extends React.Component {
       user: this.state.user,
       onSubmit: this.onUserRegister
     };
+    const isUserLogged = this.state.user.firstname !== '';
 
-    return (
+    return (  
       <div>
         <UserContext.Provider value={value}>        
           <Router>
-            <Navbar/>
-            <Switch>
-              <Route path="/register" component={Register} />
-              <Route path="/profile" component={Profile} />
-              <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
-              <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
-              <Route path="/advert/:id" component={AdvertDetail} />
-              <Route exact path="/" component={Home} />
-              <Route component={NotFoundPage} />
-            </Switch>
+            {
+              !isUserLogged
+              &&
+              <React.Fragment>
+                <p>no estas logueado !!</p>
+                <Route component={Register} />
+              </React.Fragment>
+            }
+            {
+              isUserLogged
+              &&
+              <React.Fragment>              
+                <Navbar/>
+
+                <Switch>
+                  <Route path="/register" component={Register} />
+                  <Route path="/profile" component={Profile} />
+                  <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
+                  <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
+                  <Route path="/advert/:id" component={AdvertDetail} />
+                  <Route exact path="/" component={Home} />
+                  <Route component={NotFoundPage} />
+                </Switch>
+            </React.Fragment>
+            }
           </Router>
         </UserContext.Provider>
       </div>
