@@ -7,7 +7,6 @@ export default class AdvertList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log('Adverts on AdvertList ', this.props.adverts);
   }
 
   buildAdvertList = adverts => {
