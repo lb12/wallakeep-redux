@@ -74,7 +74,7 @@ export default class App extends React.Component {
                     <Route path="/login" component={Login} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
-                    <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
+                    <Route path="/edit-advert" component={EditAdvert} /> {/* Edit advert */}
                     <Route path="/advert/:id" component={AdvertDetail} />
                     <Route exact path="/" component={Home} />
                     <Route component={NotFoundPage} />

@@ -16,13 +16,17 @@ export default class AdvertDetail extends React.Component {
 
   getAdvert = async advertId => {
     let advert = await API.getAdvertById(advertId);
-    console.log(advert)
     if (!advert.success) {
       this.props.history.push("/404");
     } else {
       advert = advert.result;
       this.setState({ advert });
     }
+  };
+
+  editAdvert = () => {
+    const { advert } = this.state;
+    this.props.history.push(`/edit-advert/${advert.id}`);
   };
 
   render() {
@@ -40,6 +44,7 @@ export default class AdvertDetail extends React.Component {
             <div>
               {advert.tags.map( tag => <span key={tag} className={`badge badge-${tag}`}>{tag} </span>)}
             </div>
+            <button onClick={this.editAdvert}>Edit advert</button>
           </div>
         }
       </div>

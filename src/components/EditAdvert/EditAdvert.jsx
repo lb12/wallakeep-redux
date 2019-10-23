@@ -1,28 +1,54 @@
 import React from "react";
 
-import * as API from '../../services/APIService';
+import * as API from "../../services/APIService";
 import Tags from "../Tags/Tags";
 
 // Este componente se encarga de manejar la creación y la edición de un anuncio
 export default class EditAdvert extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      advert: {
-        name: '',
-        price: '',
-        description: '',
-        photo: '',
-        tags: [],
-        type: ''
-      }
-    };
+    this.state = this.resetAdvertCreationState();
   }
+
+  resetAdvertCreationState = () => {
+    return {
+      advert: {
+        name: "",
+        price: "",
+        description: "",
+        photo: "",
+        tags: [],
+        type: ""
+      },
+      editingAdvert: false
+    };
+  };
+
+  componentWillReceiveProps() {
+    this.setState(this.resetAdvertCreationState());
+  }
+  componentWillMount() {
+    this.fillFieldsIfEditingAdvert();
+  }
+
+  fillFieldsIfEditingAdvert = async () => {
+    const { pathname } = this.props.location;
+
+    const splittedPathname = pathname.split("/");
+    if (splittedPathname[1].includes("edit-advert")) {
+      const result = await API.getAdvertById(splittedPathname[2]);
+      if (result.success) {
+        const advert = result.result;
+        this.setState({ advert, editingAdvert: true });
+        console.log(this.state);
+      }
+    }
+  };
 
   onSubmit = evt => {
     evt && evt.preventDefault();
     console.log(this.state);
-  }
+  };
 
   onInputChange = evt => {
     const { name, value } = evt.target;
@@ -31,25 +57,24 @@ export default class EditAdvert extends React.Component {
 
   onRadioChange = evt => {
     const { id } = evt.target;
-    this.updateState('type', id);
+    this.updateState("type", id);
   };
 
   onSelectChange = selectedTags => {
-    console.log(selectedTags);
-    this.updateState('tags', selectedTags);
+    this.updateState("tags", selectedTags);
   };
 
-  updateState = ((name, value) => {
+  updateState = (name, value) => {
     this.setState(({ advert }) => ({
       advert: {
         ...advert,
         [name]: value
       }
     }));
-  });
+  };
 
   render() {
-      const { name, price, description, photo, type } = this.state.advert;
+    const { name, price, description, photo, tags, type } = this.state.advert;
     return (
       <form onSubmit={this.onSubmit}>
         <div>
@@ -65,8 +90,7 @@ export default class EditAdvert extends React.Component {
         </div>
         <div>
           <p>Description</p>
-          <input
-            type="textarea"
+          <textarea
             name="description"
             id="description"
             value={description}
@@ -87,7 +111,7 @@ export default class EditAdvert extends React.Component {
         </div>
         <div>
           <p>Tag</p>
-          <Tags multiple={true} onTagSelected={this.onSelectChange} />
+          <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
         </div>
 
         <div>
@@ -111,16 +135,19 @@ export default class EditAdvert extends React.Component {
           />
           <label htmlFor="sell">Sell</label>
         </div>
-        <div>
-          <p>Photo</p>
-          <input
-            type="file"
-            name="photo"
-            id="photo"
-            value={photo}
-            onChange={this.onInputChange}
-          />
-        </div>
+
+        {photo && photo.length === 0 && (
+          <div>
+            <p>Photo</p>
+            <input
+              type="file"
+              name="photo"
+              id="photo"
+              value={photo}
+              onChange={this.onInputChange}
+            />
+          </div>
+        )}
 
         <button type="submit">Save</button>
       </form>
