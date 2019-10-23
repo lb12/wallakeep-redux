@@ -12,6 +12,7 @@ import Home from '../Home/Home';
 import UserContext from "../../contexts/UserContext";
 
 import "./App.css";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -52,35 +53,37 @@ export default class App extends React.Component {
 
     return (  
       <div>
-        <UserContext.Provider value={value}>        
-          <Router>
-            {
-              !this.isUserLogged()
-              &&
-              <React.Fragment>
-                <p>no estas logueado !!</p>
-                <Route component={Login} />
-              </React.Fragment>
-            }
-            {
-              this.isUserLogged()
-              &&
-              <React.Fragment>              
-                <Navbar/>
+        <ErrorBoundary>
+          <UserContext.Provider value={value}>        
+            <Router>
+              {
+                !this.isUserLogged()
+                &&
+                <React.Fragment>
+                  <p>no estas logueado !!</p>
+                  <Route component={Login} />
+                </React.Fragment>
+              }
+              {
+                this.isUserLogged()
+                &&
+                <React.Fragment>              
+                  <Navbar/>
 
-                <Switch>
-                  <Route path="/login" component={Login} />
-                  <Route path="/profile" component={Profile} />
-                  <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
-                  <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
-                  <Route path="/advert/:id" component={AdvertDetail} />
-                  <Route exact path="/" component={Home} />
-                  <Route component={NotFoundPage} />
-                </Switch>
-            </React.Fragment>
-            }
-          </Router>
-        </UserContext.Provider>
+                  <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/profile" component={Profile} />
+                    <Route path="/create-advert" component={EditAdvert} /> {/* Create advert */}
+                    <Route path="/edit-advert/:id" component={EditAdvert} /> {/* Edit advert */}
+                    <Route path="/advert/:id" component={AdvertDetail} />
+                    <Route exact path="/" component={Home} />
+                    <Route component={NotFoundPage} />
+                  </Switch>
+              </React.Fragment>
+              }
+            </Router>
+          </UserContext.Provider>
+        </ErrorBoundary>
       </div>
     );
   }
