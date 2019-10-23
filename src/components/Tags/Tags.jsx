@@ -26,26 +26,36 @@ export default class Tags extends React.Component {
 
     onChange = evt => {
         const selectedIndex = evt.target.selectedIndex - 1; // Descontar el 'Select a tag'  
-        const tagSelected = this.state.tags[ selectedIndex ];
+        const selectedTag = this.state.tags[ selectedIndex ];
 
-        this.props.onTagSelected(tagSelected);
+        this.props.onTagSelected(selectedTag);
+    }
+
+    onMultipleChange = evt => {
+        let selectedTags = ([...evt.target.options].filter(options => options.selected).map( option => option.value ));
+        this.props.onTagSelected(selectedTags);
     }
 
     render(){
         const { tags } = this.state;
-        const multipleSelect = this.props.multiple ? 'multiple' : '';
-        const defaultValue = this.props.multiple ? [] : 'DEFAULT';
         return (
             <div>
                 {
                 tags
                 &&
-                <select defaultValue={defaultValue} multiple={multipleSelect} onChange={this.onChange}>
-                    {
-                        !multipleSelect
-                        &&
-                        <option value="DEFAULT" disabled>Select a tag</option>
-                    }
+                !this.props.multiple
+                &&
+                <select defaultValue="DEFAULT" onChange={this.onChange}>
+                    <option value="DEFAULT" disabled>Select a tag</option>
+                    { this.renderTags(tags) }
+                </select>
+                }
+                {
+                tags
+                &&
+                this.props.multiple
+                &&
+                <select multiple onChange={this.onMultipleChange}>
                     { this.renderTags(tags) }
                 </select>
                 }
