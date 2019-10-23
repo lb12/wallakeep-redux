@@ -58,18 +58,22 @@ const getAdvertById = async id => {
  * POST create a new advert
  */
 const createAdvert = async _advert => {
-    const advert = await postRequest(`${API_URL}/anuncios/`, _advert);
+    console.log('creo el anuncio ', _advert);
+    const res = await postRequest(`${API_URL}/anuncios/`, _advert);
+    res.result = new Advert(res.result);
 
-    return new Advert(advert);
+    return res;
 };
 
 /**
  * PUT update an advert using his Id
  */
 const updateAdvert = async _advert => {
-    const advert = await putRequest(`${API_URL}/anuncios/`, _advert);
+    console.log('actualizo el anuncio ', _advert);
+    const res = await putRequest(`${API_URL}/anuncios/${_advert.id}`, _advert);
+    res.result = new Advert(res.result);
 
-    return new Advert(advert);
+    return res;
 };
 
 /**

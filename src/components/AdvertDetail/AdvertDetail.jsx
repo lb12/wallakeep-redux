@@ -16,6 +16,7 @@ export default class AdvertDetail extends React.Component {
 
   getAdvert = async advertId => {
     let advert = await API.getAdvertById(advertId);
+    console.log(advert)
     if (!advert.success) {
       this.props.history.push("/404");
     } else {

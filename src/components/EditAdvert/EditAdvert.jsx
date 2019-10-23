@@ -10,6 +10,13 @@ export default class EditAdvert extends React.Component {
     this.state = this.resetAdvertCreationState();
   }
 
+  componentWillReceiveProps() {
+    this.setState(this.resetAdvertCreationState());
+  }
+  componentWillMount() {
+    this.fillFieldsIfEditingAdvert();
+  }
+
   resetAdvertCreationState = () => {
     return {
       advert: {
@@ -24,13 +31,6 @@ export default class EditAdvert extends React.Component {
     };
   };
 
-  componentWillReceiveProps() {
-    this.setState(this.resetAdvertCreationState());
-  }
-  componentWillMount() {
-    this.fillFieldsIfEditingAdvert();
-  }
-
   fillFieldsIfEditingAdvert = async () => {
     const { pathname } = this.props.location;
 
@@ -40,14 +40,22 @@ export default class EditAdvert extends React.Component {
       if (result.success) {
         const advert = result.result;
         this.setState({ advert, editingAdvert: true });
-        console.log(this.state);
       }
     }
   };
 
-  onSubmit = evt => {
+  onSubmit = async evt => {
     evt && evt.preventDefault();
-    console.log(this.state);
+
+    const { advert, editingAdvert } = this.state;
+    const { success, result } = editingAdvert ? await API.updateAdvert(advert) : await API.createAdvert(advert);
+
+    if ( success ) {
+      this.props.history.push(`/advert/${result.id}?edit=true`);
+      return;
+    }
+
+    // TODO: Show error toast    
   };
 
   onInputChange = evt => {
@@ -75,82 +83,88 @@ export default class EditAdvert extends React.Component {
 
   render() {
     const { name, price, description, photo, tags, type } = this.state.advert;
+    const updateOrCreateAdvert = this.state.editingAdvert ? 'Update advert' : 'Create advert';
+    const photoFieldType = this.state.editingAdvert ? 'text' : 'url';
     return (
-      <form onSubmit={this.onSubmit}>
-        <div>
-          <p>Name</p>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            placeholder="Name"
-            onChange={this.onInputChange}
-          />
-        </div>
-        <div>
-          <p>Description</p>
-          <textarea
-            name="description"
-            id="description"
-            value={description}
-            placeholder="Write a description of the product"
-            onChange={this.onInputChange}
-          />
-        </div>
-        <div>
-          <p>Price</p>
-          <input
-            type="number"
-            name="price"
-            id="price"
-            value={price}
-            placeholder="Price"
-            onChange={this.onInputChange}
-          />
-        </div>
-        <div>
-          <p>Tag</p>
-          <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
-        </div>
-
-        <div>
-          <p>Advert type</p>
-
-          <input
-            type="radio"
-            name="type"
-            value={type}
-            id="buy"
-            onChange={this.onRadioChange}
-          />
-          <label htmlFor="buy">Buy</label>
-
-          <input
-            type="radio"
-            name="type"
-            value={type}
-            id="sell"
-            onChange={this.onRadioChange}
-          />
-          <label htmlFor="sell">Sell</label>
-        </div>
-
-        {photo && photo.length === 0 && (
+      <React.Fragment>
+        <h1>{updateOrCreateAdvert}</h1>
+        <form onSubmit={this.onSubmit}>
           <div>
-            <p>Photo</p>
+            <p>Name</p>
             <input
-              type="file"
-              name="photo"
-              id="photo"
-              value={photo}
+              type="text"
+              name="name"
+              id="name"
+              value={name}
+              placeholder="Name"
               onChange={this.onInputChange}
             />
           </div>
-        )}
+          <div>
+            <p>Description</p>
+            <textarea
+              name="description"
+              id="description"
+              value={description}
+              placeholder="Write a description of the product"
+              onChange={this.onInputChange}
+            />
+          </div>
+          <div>
+            <p>Price</p>
+            <input
+              type="number"
+              name="price"
+              id="price"
+              value={price}
+              placeholder="Price"
+              onChange={this.onInputChange}
+            />
+          </div>
+          <div>
+            <p>Tag</p>
+            <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
+          </div>
 
-        <button type="submit">Save</button>
-      </form>
+          <div>
+            <p>Advert type</p>
+
+            <input
+              type="radio"
+              name="type"
+              value={type}
+              checked={type === 'buy'}
+              id="buy"
+              onChange={this.onRadioChange}
+            />
+            <label htmlFor="buy">Buy</label>
+
+            <input
+              type="radio"
+              name="type"
+              value={type}
+              checked={type === 'sell'}
+              id="sell"
+              onChange={this.onRadioChange}
+            />
+            <label htmlFor="sell">Sell</label>
+          </div>
+
+          <div>
+            <p>Photo</p>
+            <input
+              type={photoFieldType}
+              name="photo"
+              id="photo"
+              value={photo}
+              placeholder="URL of your advert photo"
+              onChange={this.onInputChange}
+            />
+          </div>
+
+          <button type="submit">{updateOrCreateAdvert}</button>
+        </form>
+      </React.Fragment>
     );
   }
 }
