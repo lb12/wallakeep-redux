@@ -55,7 +55,7 @@ export default class Tags extends React.Component {
                 &&
                 this.props.multiple
                 &&
-                <select multiple onChange={this.onMultipleChange}>
+                <select multiple value={this.props.selectedTags} onChange={this.onMultipleChange}>
                     { this.renderTags(tags) }
                 </select>
                 }
