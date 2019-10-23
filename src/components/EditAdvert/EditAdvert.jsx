@@ -13,6 +13,7 @@ export default class EditAdvert extends React.Component {
   componentWillReceiveProps() {
     this.setState(this.resetAdvertCreationState());
   }
+  
   componentWillMount() {
     this.fillFieldsIfEditingAdvert();
   }
