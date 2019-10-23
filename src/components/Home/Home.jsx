@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 
 import * as API from '../../services/APIService';
 import Filters from '../Filters/Filters';
@@ -14,6 +15,13 @@ export default class Home extends React.Component {
     }; 
   }
 
+  // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
+  source = axios.CancelToken.source();
+
+  componentWillUnmount() {
+    this.source.cancel('Home component');
+  }
+
   getAdvertsByUserTag = adverts => {
     if (adverts.length === 0) {
       const {tag} = this.context.user;
@@ -22,7 +30,7 @@ export default class Home extends React.Component {
   };
 
   searchAdverts = async filters => {
-    const adverts = await API.listAdverts(filters, 10, 1);
+    const adverts = await API.listAdverts(filters, 10, 1, this.source);
     this.setState({adverts});
   };
 

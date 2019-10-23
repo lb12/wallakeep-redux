@@ -27,6 +27,15 @@ export default class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const userOnLocalStorage = localStorage.getItem('user');
+    const isUserLogged = this.state.user.firstname !== '';
+    
+    if (userOnLocalStorage && !isUserLogged){
+      this.onUserLogin(JSON.parse(userOnLocalStorage));
+    }
+  }
+
   onUserLogin = user => {
     this.setState({ user });
   };
@@ -36,13 +45,7 @@ export default class App extends React.Component {
 
     if ( !userOnLocalStorage) return false;
 
-    const isUserLogged = this.state.user.firstname !== '';
-    if(!isUserLogged) {
-      console.log(JSON.parse(userOnLocalStorage));
-      this.onUserLogin(JSON.parse(userOnLocalStorage));
-    }
-
-    return true;
+    return this.state.user.firstname !== '';
   };
 
   render() {

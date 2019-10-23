@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import * as API from '../../services/APIService';
 
@@ -14,8 +15,16 @@ export default class AdvertDetail extends React.Component {
     this.getAdvert(advertId);
   }
 
+
+  // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
+  source = axios.CancelToken.source();
+
+  componentWillUnmount() {
+    this.source.cancel('AdvertDetail component');
+  }
+
   getAdvert = async advertId => {
-    let advert = await API.getAdvertById(advertId);
+    let advert = await API.getAdvertById(advertId, this.source);
     console.log(advert)
     if (!advert.success) {
       this.props.history.push("/404");

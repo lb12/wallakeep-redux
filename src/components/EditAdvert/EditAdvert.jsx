@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import * as API from "../../services/APIService";
 import Tags from "../Tags/Tags";
@@ -10,12 +11,20 @@ export default class EditAdvert extends React.Component {
     this.state = this.resetAdvertCreationState();
   }
 
-  componentWillReceiveProps() {
+  // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
+  source = axios.CancelToken.source();
+
+  // Está bien usar esto? Preguntar a Jesé
+  UNSAFE_componentWillReceiveProps() {
     this.setState(this.resetAdvertCreationState());
   }
   
-  componentWillMount() {
+  componentDidMount() {
     this.fillFieldsIfEditingAdvert();
+  }
+
+  componentWillUnmount() {
+    this.source.cancel('EditAdvert component');
   }
 
   resetAdvertCreationState = () => {
@@ -37,7 +46,7 @@ export default class EditAdvert extends React.Component {
 
     const splittedPathname = pathname.split("/");
     if (splittedPathname[1].includes("edit-advert")) {
-      const result = await API.getAdvertById(splittedPathname[2]);
+      const result = await API.getAdvertById(splittedPathname[2], this.source);
       if (result.success) {
         const advert = result.result;
         this.setState({ advert, editingAdvert: true });
@@ -49,7 +58,7 @@ export default class EditAdvert extends React.Component {
     evt && evt.preventDefault();
 
     const { advert, editingAdvert } = this.state;
-    const { success, result } = editingAdvert ? await API.updateAdvert(advert) : await API.createAdvert(advert);
+    const { success, result } = editingAdvert ? await API.updateAdvert(advert, this.source) : await API.createAdvert(advert, this.source);
 
     if ( success ) {
       this.props.history.push(`/advert/${result.id}?edit=true`);

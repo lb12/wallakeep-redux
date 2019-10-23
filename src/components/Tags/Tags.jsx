@@ -1,5 +1,6 @@
 import React from 'react';
 import * as API from '../../services/APIService';
+import axios from 'axios';
 
 
 export default class Tags extends React.Component {
@@ -9,13 +10,23 @@ export default class Tags extends React.Component {
         this.state = {
             tags: []
         }
+    }
 
+    // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
+    source = axios.CancelToken.source();
+
+    componentDidMount() {
         this.getTags();
     }
 
+    componentWillUnmount() {
+        this.source.cancel('Tags component');
+    }
+
     getTags = async () => {
-        const tags = await API.getTags();
-        this.setState({tags});
+        const tags = await API.getTags(this.source);
+        if ( tags )
+            this.setState({tags});
     } 
 
     renderTags = tags => {
@@ -41,23 +52,18 @@ export default class Tags extends React.Component {
         return (
             <div>
                 {
-                tags
-                &&
-                !this.props.multiple
-                &&
-                <select defaultValue="DEFAULT" onChange={this.onChange}>
-                    <option value="DEFAULT" disabled>Select a tag</option>
-                    { this.renderTags(tags) }
-                </select>
-                }
-                {
-                tags
-                &&
-                this.props.multiple
-                &&
-                <select multiple value={this.props.selectedTags} onChange={this.onMultipleChange}>
-                    { this.renderTags(tags) }
-                </select>
+                (tags && tags.length && !this.props.multiple) ? 
+                (
+                    <select defaultValue="DEFAULT" onChange={this.onChange}>
+                        <option value="DEFAULT" disabled>Select a tag</option>
+                        { this.renderTags(tags) }
+                    </select>
+                ) : 
+                (
+                    <select multiple value={this.props.selectedTags} onChange={this.onMultipleChange}>
+                        { this.renderTags(tags) }
+                    </select>
+                )
                 }
             </div>
         );

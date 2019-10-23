@@ -3,29 +3,36 @@ import Advert from '../models/Advert';
 
 const API_URL = `http://localhost:3001/apiv1`;
 
-const getRequest = url => {
-    return axios.get(url)
+const getRequest = (url, cancelTokenSource) => {
+    return axios.get(url, { cancelToken: cancelTokenSource.token })
     .then( res => res.data)
-    .catch( error => console.error(error));
+    .catch( error => handleRequestError(error));
 };
 
-const postRequest = (url, data) => {
-    return axios.post(url, data)    
+const postRequest = (url, data, cancelTokenSource) => {
+    return axios.post(url, data, { cancelToken: cancelTokenSource.token })    
     .then( res => res.data)
-    .catch( error => console.error(error));
+    .catch( error => handleRequestError(error));
 };
 
-const putRequest = (url, data) => {
-    return axios.put(url, data)
+const putRequest = (url, data, cancelTokenSource) => {
+    return axios.put(url, data, { cancelToken: cancelTokenSource.token })
     .then( res => res.data)
-    .catch( error => console.error(error));
+    .catch( error => handleRequestError(error));
 };
 
+const handleRequestError = error => {
+    if (axios.isCancel(error)) {
+        console.log("Request canceled:", error.message);
+        return false;
+    }
+    console.error(error);
+};
 
 /**
  * GET all adverts filtering and using pagination
  */
-const listAdverts = async ({name, price, tag, selling}, adsPerPage, page) => {
+const listAdverts = async ({name, price, tag, selling}, adsPerPage, page, cancelTokenSource) => {
     let queryParams = '';
 
     if (name && name.length) queryParams += (`${getQueryParamToken(queryParams)}name=${name}`); 
@@ -36,7 +43,7 @@ const listAdverts = async ({name, price, tag, selling}, adsPerPage, page) => {
     queryParams += `${getQueryParamToken(queryParams)}limit=${adsPerPage}`;
     queryParams += page > 1 ? (`${getQueryParamToken(queryParams)}skip=${--page * adsPerPage}`) : '';
 
-    const res = await getRequest(`${API_URL}/anuncios${queryParams}`);
+    const res = await getRequest(`${API_URL}/anuncios${queryParams}`, cancelTokenSource);
     res.results = res.results.map( advert => new Advert(advert));
 
     return res;
@@ -47,8 +54,8 @@ const getQueryParamToken = queryParams => queryParams.length === 0 ? '?' : '&';
 /**
  * GET an advert using his Id
  */
-const getAdvertById = async id => {
-    const res = await getRequest(`${API_URL}/anuncios/${id}`);
+const getAdvertById = async (id, cancelTokenSource) => {
+    const res = await getRequest(`${API_URL}/anuncios/${id}`, cancelTokenSource);
     res.result = new Advert(res.result);
 
     return res;
@@ -57,9 +64,8 @@ const getAdvertById = async id => {
 /**
  * POST create a new advert
  */
-const createAdvert = async _advert => {
-    console.log('creo el anuncio ', _advert);
-    const res = await postRequest(`${API_URL}/anuncios/`, _advert);
+const createAdvert = async (_advert, cancelTokenSource) => {
+    const res = await postRequest(`${API_URL}/anuncios/`, _advert, cancelTokenSource);
     res.result = new Advert(res.result);
 
     return res;
@@ -68,9 +74,9 @@ const createAdvert = async _advert => {
 /**
  * PUT update an advert using his Id
  */
-const updateAdvert = async _advert => {
+const updateAdvert = async (_advert, cancelTokenSource) => {
     console.log('actualizo el anuncio ', _advert);
-    const res = await putRequest(`${API_URL}/anuncios/${_advert.id}`, _advert);
+    const res = await putRequest(`${API_URL}/anuncios/${_advert.id}`, _advert, cancelTokenSource);
     res.result = new Advert(res.result);
 
     return res;
@@ -79,8 +85,8 @@ const updateAdvert = async _advert => {
 /**
  * GET all possible tags
  */
-const getTags = async () => {
-    const tags = await getRequest(`${API_URL}/tags`);
+const getTags = async cancelTokenSource => {
+    const tags = await getRequest(`${API_URL}/tags`, cancelTokenSource);
     return tags.results;
 };
 
