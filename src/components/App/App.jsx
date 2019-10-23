@@ -8,11 +8,11 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Home from '../Home/Home';
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 import UserContext from "../../contexts/UserContext";
 
 import "./App.css";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 export default class App extends React.Component {
   constructor(props) {
