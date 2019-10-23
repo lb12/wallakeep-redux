@@ -20,6 +20,7 @@ class Advert extends React.Component {
         onClick={this.goDetailPage}
       >
         <h1>{advert.name}</h1>
+        <img src={advert.photo} alt={`${advert.name}_advert_img`}/>
         <p>{advert.description}</p>
         <p>{advert.price} €</p>
         <p>{advert.type}</p>

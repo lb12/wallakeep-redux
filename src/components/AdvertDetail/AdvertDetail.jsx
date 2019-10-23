@@ -45,6 +45,7 @@ export default class AdvertDetail extends React.Component {
             <div>
               {advert.tags.map( tag => <span key={tag} className={`badge badge-${tag}`}>{tag} </span>)}
             </div>
+            <img src={advert.photo} alt={`${advert.name}_advert_img`} />
             <button onClick={this.editAdvert}>Edit advert</button>
           </div>
         }

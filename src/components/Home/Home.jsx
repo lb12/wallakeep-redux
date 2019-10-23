@@ -9,7 +9,8 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      adverts: []
+      adverts: [],
+      hasFiltered: false
     }; 
   }
 
@@ -25,15 +26,23 @@ export default class Home extends React.Component {
     this.setState({adverts});
   };
 
+  onFiltered = filters => {
+    this.searchAdverts(filters);
+    this.setState({hasFiltered: true});
+  };
+
   render() {
-    const { adverts } = this.state;
-    this.getAdvertsByUserTag(adverts);
+    const { adverts, hasFiltered } = this.state;
+    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: '${this.context.user.tag}'`;
+    
+    !hasFiltered && this.getAdvertsByUserTag(adverts);
     
     return (
       <div>
         <React.Fragment>
-          <Filters onSubmit={this.searchAdverts} />
+          <Filters onSubmit={this.onFiltered} />
           <hr />
+          <h1>{h1Message}</h1>
           <AdvertList adverts={adverts}/>
         </React.Fragment>
       </div>
