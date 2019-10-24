@@ -19,6 +19,7 @@ export default class Login extends React.Component {
     console.log(this.state.user);
     localStorage.setItem('user', JSON.stringify(this.state.user));
     this.context.onSubmit(this.state.user);
+    this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
   };
 
   onInputChange = evt => {
@@ -42,33 +43,38 @@ export default class Login extends React.Component {
   render() {
     const { firstname, surname } = this.state.user;
     return (
-      <div>
+      <div className="container">
+        <h1>Sign in</h1>
         <form onSubmit={this.onSubmit}>
-          <div>
-            <p>Firstname</p>
+          <div className="form-group">
+            <label htmlFor="firstname">Firstname</label>
             <input
               type="text"
               name="firstname"
               value={firstname}
+              className="form-control"
+              placeholder="Enter firstname"
               onChange={this.onInputChange}
               id=""
             />
           </div>
-          <div>
-            <p>Surname</p>
+          <div className="form-group">
+            <label htmlFor="surname">Surname</label>
             <input
               type="text"
               name="surname"
               value={surname}
+              className="form-control"
+              placeholder="Enter surname"
               onChange={this.onInputChange}
               id=""
             />
           </div>
-          <div>
-            <p>Tag</p>
+          <div className="form-group">
+            <label htmlFor="tags-select">Tags</label>
             <Tags onTagSelected={this.onTagSelected} />
           </div>
-          <button type="submit">Log in</button>
+          <button type="submit" className="btn btn-primary">Log in</button>
         </form>
       </div>
     );

@@ -1,6 +1,8 @@
 import React from "react";
 import Tags from "../Tags/Tags";
 
+import './Filters.css';
+
 export default class Filters extends React.Component {
   constructor(props) {
     super(props);
@@ -68,66 +70,87 @@ export default class Filters extends React.Component {
   render() {
     const { name, lowerPrice, greaterPrice, selling } = this.state.filters;
     return (
-      <form onSubmit={this.onSubmit}>
-        <div>
-          <p>Name</p>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            placeholder="Name"
-            onChange={this.onInputChange}
-          />
+      <div class="card mt-4 mb-2">
+        <div className="card-header pointer">
+          <h3 className="" data-toggle="collapse" data-target="#collapseFilters">See filters</h3>
         </div>
-        <div>
-          <p>Price</p>
-          <input
-            type="text"
-            name="lowerPrice"
-            id="lowerPrice"
-            value={lowerPrice}
-            placeholder="Lower Price"
-            onChange={this.onInputChange}
-          />
-          <input
-            type="text"
-            name="greaterPrice"
-            id="greaterPrice"
-            value={greaterPrice}
-            placeholder="Greater Price"
-            onChange={this.onInputChange}
-          />
+        <div class="collapse f-container" id="collapseFilters">
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label className="input-label" htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className="form-control"
+                value={name}
+                placeholder="Name"
+                onChange={this.onInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <div className="form-group">
+                <label className="input-label"htmlFor="lowerPrice">Lower price</label>
+                <input
+                  type="text"
+                  name="lowerPrice"
+                  id="lowerPrice"
+                  className="form-control"
+                  value={lowerPrice}
+                  placeholder="Lower Price"
+                  onChange={this.onInputChange}
+                />
+              </div>
+              <div>
+                <label className="input-label" htmlFor="greaterPrice">Greater price</label>
+                <input
+                  type="text"
+                  name="greaterPrice"
+                  id="greaterPrice"
+                  className="form-control"
+                  value={greaterPrice}
+                  placeholder="Greater Price"
+                  onChange={this.onInputChange}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="input-label" htmlFor="tags-select">Tag</label>
+              <Tags onTagSelected={this.onSelectChange} />
+            </div>
+            <div className="form-group">
+              <div>
+                <span className="input-label">Type</span>
+              </div>
+              <div className="form-check form-check-inline" id="aa">
+                <input
+                  type="radio"
+                  name="selling"
+                  value={selling}
+                  id="buy-filter"
+                  className="form-check-input"
+                  onChange={this.onRadioChange}
+                />
+                <label className="form-check-label" htmlFor="buy-filter">Buy</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  name="selling"
+                  value={selling}
+                  id="sell-filter"
+                  className="form-check-input"
+                  onChange={this.onRadioChange}
+                />
+                <label className="form-check-label" htmlFor="sell-filter">Sell</label>
+              </div>
+
+            </div>
+            
+            <button type="submit" className="btn btn-primary submit-btn">Filtrar</button>
+          </form>
         </div>
-        <div>
-          <p>Tag</p>
-          <Tags onTagSelected={this.onSelectChange} />
-        </div>
-
-        <div>
-          <p>Advert type</p>
-
-          <input
-            type="radio"
-            name="selling"
-            value={selling}
-            id="buy-filter"
-            onChange={this.onRadioChange}
-          />
-          <label htmlFor="buy-filter">Buy</label>
-
-          <input
-            type="radio"
-            name="selling"
-            value={selling}
-            id="sell-filter"
-            onChange={this.onRadioChange}
-          />
-          <label htmlFor="sell-filter">Sell</label>
-        </div>
-
-        <button type="submit">Filtrar</button>
-      </form>
+      </div>
     );
   }
 }

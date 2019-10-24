@@ -11,7 +11,7 @@ export default class AdvertList extends React.Component {
 
   buildAdvertList = adverts => {
     return (
-      <div className="row">
+      <div>
         {
           adverts.map(advert => <Advert key={advert.id} advert={advert} />)
         }

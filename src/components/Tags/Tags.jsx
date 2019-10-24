@@ -54,13 +54,13 @@ export default class Tags extends React.Component {
                 {
                 (tags && tags.length && !this.props.multiple) ? 
                 (
-                    <select defaultValue="DEFAULT" onChange={this.onChange}>
+                    <select defaultValue="DEFAULT" className="form-control" id="tags-select" onChange={this.onChange}>
                         <option value="DEFAULT" disabled>Select a tag</option>
                         { this.renderTags(tags) }
                     </select>
                 ) : 
                 (
-                    <select multiple value={this.props.selectedTags} onChange={this.onMultipleChange}>
+                    <select multiple value={this.props.selectedTags} className="form-control" id="tags-select" onChange={this.onMultipleChange}>
                         { this.renderTags(tags) }
                     </select>
                 )

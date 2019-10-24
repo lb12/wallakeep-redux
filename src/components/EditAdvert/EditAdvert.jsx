@@ -14,11 +14,11 @@ export default class EditAdvert extends React.Component {
   // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
   source = axios.CancelToken.source();
 
-  // Está bien usar esto? Preguntar a Jesé
+  // Estaría bien cambiar este método por 'static getDerivedStateFromProps(props, state)'
   UNSAFE_componentWillReceiveProps() {
     this.setState(this.resetAdvertCreationState());
   }
-  
+
   componentDidMount() {
     this.fillFieldsIfEditingAdvert();
   }
@@ -45,7 +45,9 @@ export default class EditAdvert extends React.Component {
     const { pathname } = this.props.location;
 
     const splittedPathname = pathname.split("/");
+    // Compruebo si estoy en el pathname de actualizar
     if (splittedPathname[1].includes("edit-advert")) {
+      // Compruebo si el id que me pasan es válido.
       const result = await API.getAdvertById(splittedPathname[2], this.source);
       if (result.success) {
         const advert = result.result;

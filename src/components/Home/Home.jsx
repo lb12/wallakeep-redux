@@ -30,7 +30,7 @@ export default class Home extends React.Component {
   };
 
   searchAdverts = async filters => {
-    const adverts = await API.listAdverts(filters, 10, 1, this.source);
+    const adverts = await API.listAdverts(filters, 5, 1, this.source);
     this.setState({adverts});
   };
 
@@ -41,7 +41,7 @@ export default class Home extends React.Component {
 
   render() {
     const { adverts, hasFiltered } = this.state;
-    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: '${this.context.user.tag}'`;
+    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `${adverts.count} adverts based on your favourite tag: '${this.context.user.tag}'`;
     
     !hasFiltered && this.getAdvertsByUserTag(adverts);
     

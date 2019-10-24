@@ -63,7 +63,6 @@ export default class App extends React.Component {
                 !this.isUserLogged()
                 &&
                 <React.Fragment>
-                  <p>no estas logueado !!</p>
                   <Route component={Login} />
                 </React.Fragment>
               }
@@ -73,6 +72,10 @@ export default class App extends React.Component {
                 <React.Fragment>              
                   <Navbar/>
 
+                  <div id="main">
+
+
+                  
                   <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/profile" component={Profile} />
@@ -82,6 +85,7 @@ export default class App extends React.Component {
                     <Route exact path="/" component={Home} />
                     <Route component={NotFoundPage} />
                   </Switch>
+                  </div>
               </React.Fragment>
               }
             </Router>
