@@ -5,7 +5,7 @@
     margin-bottom: 5rem;
 }
 
-.submit-btn {
+.edit-ad-submit-btn {
     position: fixed;   
     bottom: 0;
     left: 0;
@@ -14,4 +14,43 @@
     font-weight: bold;
     text-transform: uppercase;
     padding: 1rem;
+    width: 100%;
+    opacity: .8;
+}
+
+@media ( min-width: 768px) {
+    .main-info-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .preview-container {
+        width: 20rem;        
+    }
+}
+
+@media ( min-width: 992px ) {
+    .create-edit-container {
+        display: flex;
+        flex-flow: column wrap;
+        width: 100%;
+        align-items: center;
+    }
+
+    .main-info-container {
+        width: 100%;
+    }
+
+    .info-container {
+        width: 25rem;
+    }
+
+    .edit-ad-submit-btn {
+        width: 30%;
+        position: initial;
+        margin-bottom: 3rem;
+        border-radius: .25rem;
+    }
 }

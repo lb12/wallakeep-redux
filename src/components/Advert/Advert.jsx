@@ -13,7 +13,7 @@ class Advert extends React.Component {
 
   goDetailPage = () => {
     // Si el Advert no es una previa no tendrá un id vacío, y añadimos la redireccion
-    if(this.props.advert.id !== '')
+    if(this.props.advert.id !== "")
       this.props.history.push(`/advert/${this.props.advert.id}`)
   };
 

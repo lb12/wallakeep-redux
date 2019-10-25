@@ -100,101 +100,104 @@ export default class EditAdvert extends React.Component {
   render() {
     const { advert } = this.state;
     const { name, price, description, photo, tags, type } = advert;
-    const updateOrCreateAdvert = this.state.editingAdvert ? 'Update advert' : 'Create advert';
+    const updateOrCreateAdvert = this.state.editingAdvert ? 'Update' : 'Create';
     const photoFieldType = this.state.editingAdvert ? 'text' : 'url';
     return (
       <div className="">
-        <h1 className="text-center mt-4">{updateOrCreateAdvert}</h1>
-        <div className="create-edit-container mt-4">
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label className="input-label" htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                value={name}
-                placeholder="Name"
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className="form-group">
-            <label className="input-label" htmlFor="description">Description</label>
-              <textarea
-                name="description"
-                id="description"
-                className="form-control"
-                value={description}
-                placeholder="Write a description of the product"
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="input-label" htmlFor="price">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                className="form-control"
-                value={price}
-                placeholder="Price"
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="input-label" htmlFor="tags-select">Tags</label>
-              <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
-            </div>
-            <div className="form-group">
-              <div>
-                <span className="input-label">Type</span>
-              </div>
-              <div className="form-check form-check-inline">
+        <h1 className="text-center mt-4">{updateOrCreateAdvert} advert</h1>
+        <form className="create-edit-container mt-4" onSubmit={this.onSubmit}>
+          <div class="main-info-container">
+            <div className="info-container mb-5rem">
+              <div className="form-group">
+                <label className="input-label" htmlFor="name">Name</label>
                 <input
-                  type="radio"
-                  name="type"
-                  id="buy"
-                  className="form-check-input"
-                  value={type}
-                  checked={type === 'buy'}
-                  onChange={this.onRadioChange}
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="form-control"
+                  value={name}
+                  placeholder="Name"
+                  onChange={this.onInputChange}
                 />
-                <label className="form-check-label" htmlFor="buy">Buy</label>
               </div>
-              <div className="form-check form-check-inline">
+              <div className="form-group">
+              <label className="input-label" htmlFor="description">Description</label>
+                <textarea
+                  name="description"
+                  id="description"
+                  className="form-control"
+                  value={description}
+                  placeholder="Write a description of the product"
+                  onChange={this.onInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label className="input-label" htmlFor="price">Price</label>
                 <input
-                  type="radio"
-                  name="type"
-                  id="sell"
-                  className="form-check-input"
-                  value={type}
-                  checked={type === 'sell'}
-                  onChange={this.onRadioChange}
+                  type="number"
+                  name="price"
+                  id="price"
+                  className="form-control"
+                  value={price}
+                  placeholder="Price"
+                  onChange={this.onInputChange}
                 />
-                <label className="form-check-label" htmlFor="sell">Sell</label>
+              </div>
+              <div className="form-group">
+                <label className="input-label" htmlFor="tags-select">Tags</label>
+                <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
+              </div>
+              <div className="form-group">
+                <div>
+                  <span className="input-label">Type</span>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="buy"
+                    className="form-check-input"
+                    value={type}
+                    checked={type === 'buy'}
+                    onChange={this.onRadioChange}
+                  />
+                  <label className="form-check-label" htmlFor="buy">Buy</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="sell"
+                    className="form-check-input"
+                    value={type}
+                    checked={type === 'sell'}
+                    onChange={this.onRadioChange}
+                  />
+                  <label className="form-check-label" htmlFor="sell">Sell</label>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="input-label" htmlFor="photo">Photo URL</label>
+                <input
+                  type={photoFieldType}
+                  name="photo"
+                  id="photo"
+                  className="form-control"
+                  value={photo}
+                  placeholder="URL of your advert photo"
+                  onChange={this.onInputChange}
+                />
               </div>
             </div>
-            <div className="form-group">
-            <label className="input-label" htmlFor="photo">Photo</label>
-              <input
-                type={photoFieldType}
-                name="photo"
-                id="photo"
-                className="form-control"
-                value={photo}
-                placeholder="URL of your advert photo"
-                onChange={this.onInputChange}
-              />
+            <div className="preview-container mb-5rem">
+              <h2 className="text-center mt-5">Preview</h2>
+              <div id="advert-preview" className="mb-5rem">
+                <Advert advert={advert} />
+              </div>
             </div>
-            <h2 className="text-center mt-5">Preview</h2>
-            <div id="advert-preview" className="mb-5rem">
-              <Advert advert={advert} />
-            </div>
-            <button type="submit" className="btn btn-primary submit-btn">{updateOrCreateAdvert}</button>
-          </form>
-
-        </div>
+          </div>
+          <button type="submit" className="btn btn-primary edit-ad-submit-btn">{updateOrCreateAdvert}</button>
+        </form>
       </div>
     );
   }
