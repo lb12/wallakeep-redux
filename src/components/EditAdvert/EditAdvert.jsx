@@ -3,6 +3,9 @@ import axios from "axios";
 
 import * as API from "../../services/APIService";
 import Tags from "../Tags/Tags";
+import Advert from "../Advert/Advert";
+
+import './EditAdvert.css';
 
 // Este componente se encarga de manejar la creación y la edición de un anuncio
 export default class EditAdvert extends React.Component {
@@ -30,6 +33,7 @@ export default class EditAdvert extends React.Component {
   resetAdvertCreationState = () => {
     return {
       advert: {
+        id: "",
         name: "",
         price: "",
         description: "",
@@ -94,89 +98,104 @@ export default class EditAdvert extends React.Component {
   };
 
   render() {
-    const { name, price, description, photo, tags, type } = this.state.advert;
+    const { advert } = this.state;
+    const { name, price, description, photo, tags, type } = advert;
     const updateOrCreateAdvert = this.state.editingAdvert ? 'Update advert' : 'Create advert';
     const photoFieldType = this.state.editingAdvert ? 'text' : 'url';
     return (
-      <React.Fragment>
-        <h1>{updateOrCreateAdvert}</h1>
-        <form onSubmit={this.onSubmit}>
-          <div>
-            <p>Name</p>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              value={name}
-              placeholder="Name"
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div>
-            <p>Description</p>
-            <textarea
-              name="description"
-              id="description"
-              value={description}
-              placeholder="Write a description of the product"
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div>
-            <p>Price</p>
-            <input
-              type="number"
-              name="price"
-              id="price"
-              value={price}
-              placeholder="Price"
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div>
-            <p>Tag</p>
-            <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
-          </div>
+      <div className="">
+        <h1 className="text-center mt-4">{updateOrCreateAdvert}</h1>
+        <div className="create-edit-container mt-4">
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label className="input-label" htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className="form-control"
+                value={name}
+                placeholder="Name"
+                onChange={this.onInputChange}
+              />
+            </div>
+            <div className="form-group">
+            <label className="input-label" htmlFor="description">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                className="form-control"
+                value={description}
+                placeholder="Write a description of the product"
+                onChange={this.onInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label className="input-label" htmlFor="price">Price</label>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                className="form-control"
+                value={price}
+                placeholder="Price"
+                onChange={this.onInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label className="input-label" htmlFor="tags-select">Tags</label>
+              <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
+            </div>
+            <div className="form-group">
+              <div>
+                <span className="input-label">Type</span>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  name="type"
+                  id="buy"
+                  className="form-check-input"
+                  value={type}
+                  checked={type === 'buy'}
+                  onChange={this.onRadioChange}
+                />
+                <label className="form-check-label" htmlFor="buy">Buy</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  name="type"
+                  id="sell"
+                  className="form-check-input"
+                  value={type}
+                  checked={type === 'sell'}
+                  onChange={this.onRadioChange}
+                />
+                <label className="form-check-label" htmlFor="sell">Sell</label>
+              </div>
+            </div>
+            <div className="form-group">
+            <label className="input-label" htmlFor="photo">Photo</label>
+              <input
+                type={photoFieldType}
+                name="photo"
+                id="photo"
+                className="form-control"
+                value={photo}
+                placeholder="URL of your advert photo"
+                onChange={this.onInputChange}
+              />
+            </div>
+            <h2 className="text-center mt-5">Preview</h2>
+            <div id="advert-preview" className="mb-5rem">
+              <Advert advert={advert} />
+            </div>
+            <button type="submit" className="btn btn-primary submit-btn">{updateOrCreateAdvert}</button>
+          </form>
 
-          <div>
-            <p>Advert type</p>
-
-            <input
-              type="radio"
-              name="type"
-              value={type}
-              checked={type === 'buy'}
-              id="buy"
-              onChange={this.onRadioChange}
-            />
-            <label htmlFor="buy">Buy</label>
-
-            <input
-              type="radio"
-              name="type"
-              value={type}
-              checked={type === 'sell'}
-              id="sell"
-              onChange={this.onRadioChange}
-            />
-            <label htmlFor="sell">Sell</label>
-          </div>
-
-          <div>
-            <p>Photo</p>
-            <input
-              type={photoFieldType}
-              name="photo"
-              id="photo"
-              value={photo}
-              placeholder="URL of your advert photo"
-              onChange={this.onInputChange}
-            />
-          </div>
-
-          <button type="submit">{updateOrCreateAdvert}</button>
-        </form>
-      </React.Fragment>
+        </div>
+      </div>
     );
   }
 }

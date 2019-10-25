@@ -122,7 +122,7 @@ export default class Filters extends React.Component {
               <div>
                 <span className="input-label">Type</span>
               </div>
-              <div className="form-check form-check-inline" id="aa">
+              <div className="form-check form-check-inline">
                 <input
                   type="radio"
                   name="selling"

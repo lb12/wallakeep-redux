@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 
 import './Advert.css';
 
+/* import '../../../public/images/empty_advert_pic.png' */
+
 class Advert extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +12,9 @@ class Advert extends React.Component {
   }
 
   goDetailPage = () => {
-    this.props.history.push(`/advert/${this.props.advert.id}`)
+    // Si el Advert no es una previa no tendrá un id vacío, y añadimos la redireccion
+    if(this.props.advert.id !== '')
+      this.props.history.push(`/advert/${this.props.advert.id}`)
   };
 
   render() {
@@ -23,7 +27,7 @@ class Advert extends React.Component {
         
         >
           <div className="pointer" onClick={this.goDetailPage}>
-            <img src={advert.photo} alt={`${advert.name}_advert_img`} className="card-img-top"/>
+            <img src={advert.photo ? advert.photo : '/images/empty_advert_pic.png'} alt={`${advert.name}_advert_img`} className="card-img-top"/>
             <span className="price">{advert.price} €</span>
             <span className={` type-badge type-badge-${advert.type}`}>{advert.type}</span>
             <div className="card-body">
