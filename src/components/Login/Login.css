@@ -1,0 +1,16 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column wrap;
+    height: 100vh;
+}
+
+.login form {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.login label {
+    font-weight: bold;
+}

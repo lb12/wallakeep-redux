@@ -100,13 +100,13 @@ export default class EditAdvert extends React.Component {
   render() {
     const { advert } = this.state;
     const { name, price, description, photo, tags, type } = advert;
-    const updateOrCreateAdvert = this.state.editingAdvert ? 'Update' : 'Create';
+    const updateOrCreateAdvert = this.state.editingAdvert ? 'Edit' : 'Create';
     const photoFieldType = this.state.editingAdvert ? 'text' : 'url';
     return (
       <div className="">
         <h1 className="text-center mt-4">{updateOrCreateAdvert} advert</h1>
         <form className="create-edit-container mt-4" onSubmit={this.onSubmit}>
-          <div class="main-info-container">
+          <div className="main-info-container">
             <div className="info-container mb-5rem">
               <div className="form-group">
                 <label className="input-label" htmlFor="name">Name</label>

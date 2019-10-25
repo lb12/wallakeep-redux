@@ -22,7 +22,6 @@ class Advert extends React.Component {
     return (
       <div 
         className="card" 
-        style={{marginBottom: '3rem'}}
         key={advert.id}
         
         >

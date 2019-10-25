@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 
 import * as API from '../../services/APIService';
+import Advert from "../Advert/Advert";
+
+import './AdvertDetail.css';
 
 export default class AdvertDetail extends React.Component {
   constructor(props) {
@@ -42,23 +45,16 @@ export default class AdvertDetail extends React.Component {
   render() {
     const { advert } = this.state;
     return (
-      <div>
+      <React.Fragment>
         {
           advert
           &&
-          <div>
-            <h1>{advert.name}</h1>
-            <p>{advert.description}</p>
-            <p>{advert.price} €</p>
-            <p>{advert.type}</p>
-            <div>
-              {advert.tags.map( tag => <span key={tag} className={`badge badge-${tag}`}>{tag} </span>)}
-            </div>
-            <img src={advert.photo} alt={`${advert.name}_advert_img`} />
-            <button onClick={this.editAdvert}>Edit advert</button>
+          <div className="detail">
+            <Advert advert={advert} />
+            <button className="btn btn-primary edit-ad-submit-btn" onClick={this.editAdvert}>Edit advert</button>
           </div>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

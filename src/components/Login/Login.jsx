@@ -2,7 +2,7 @@ import React from "react";
 import Tags from "../Tags/Tags";
 import UserContext from "../../contexts/UserContext";
 
-
+import './Login.css';
 
 export default class Login extends React.Component {
   constructor(props, context) {
@@ -43,9 +43,9 @@ export default class Login extends React.Component {
   render() {
     const { firstname, surname } = this.state.user;
     return (
-      <div className="container">
+      <div className="container login">
         <h1>Sign in</h1>
-        <form onSubmit={this.onSubmit}>
+        <form className="mt-4" onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="firstname">Firstname</label>
             <input
@@ -74,7 +74,7 @@ export default class Login extends React.Component {
             <label htmlFor="tags-select">Tags</label>
             <Tags onTagSelected={this.onTagSelected} />
           </div>
-          <button type="submit" className="btn btn-primary">Log in</button>
+          <button type="submit" className="btn btn-primary mt-1">Log in</button>
         </form>
       </div>
     );
