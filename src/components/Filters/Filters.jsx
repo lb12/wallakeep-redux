@@ -70,11 +70,11 @@ export default class Filters extends React.Component {
   render() {
     const { name, lowerPrice, greaterPrice, selling } = this.state.filters;
     return (
-      <div class="card mt-4 mb-2">
+      <div className="card mt-4 mb-2">
         <div className="card-header pointer">
-          <h3 className="" data-toggle="collapse" data-target="#collapseFilters">See filters</h3>
+          <h3 className="" data-toggle="collapse" data-target="#collapseFilters">Show filters</h3>
         </div>
-        <div class="collapse f-container" id="collapseFilters">
+        <div className="collapse f-container" id="collapseFilters">
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <label className="input-label" htmlFor="name">Name</label>

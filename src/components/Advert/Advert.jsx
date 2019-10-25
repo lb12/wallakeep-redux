@@ -1,6 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+import './Advert.css';
+
 class Advert extends React.Component {
   constructor(props) {
     super(props);
@@ -14,19 +16,25 @@ class Advert extends React.Component {
   render() {
     const advert = this.props.advert;
     return (
-      <div
+      <div 
+        className="card" 
+        style={{marginBottom: '3rem'}}
         key={advert.id}
-        style={{ border: "1px solid red", cursor: "pointer", margin: "1rem" }}
-        onClick={this.goDetailPage}
-      >
-        <h1>{advert.name}</h1>
-        <img src={advert.photo} alt={`${advert.name}_advert_img`}/>
-        <p>{advert.description}</p>
-        <p>{advert.price} €</p>
-        <p>{advert.type}</p>
-        <div>
-          {advert.tags.map( tag => <span key={`${advert.id}_${tag}`} className={`badge badge-${tag}`}>{tag} </span>)}
-        </div>
+        
+        >
+          <div className="pointer" onClick={this.goDetailPage}>
+            <img src={advert.photo} alt={`${advert.name}_advert_img`} className="card-img-top"/>
+            <span className="price">{advert.price} €</span>
+            <span className={` type-badge type-badge-${advert.type}`}>{advert.type}</span>
+            <div className="card-body">
+              <h5 className="card-title">{advert.name}</h5>
+              <p className="card-text">{advert.description}</p>
+            </div>
+
+          </div>
+          <div className="list-group-item tag-badge-container">
+            {advert.tags.map( tag => <span key={`${advert.id}_${tag}`} className={`tag-badge tag-${tag}`}>{tag}</span>)}
+          </div>
       </div>
     );
   }

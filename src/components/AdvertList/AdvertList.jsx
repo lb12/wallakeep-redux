@@ -3,6 +3,8 @@ import React from "react";
 import Advert from '../Advert/Advert';
 import Pagination from "../Pagination/Pagination";
 
+import './AdvertList.css';
+
 export default class AdvertList extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ export default class AdvertList extends React.Component {
 
   buildAdvertList = adverts => {
     return (
-      <div>
+      <div className="adverts-container">
         {
           adverts.map(advert => <Advert key={advert.id} advert={advert} />)
         }

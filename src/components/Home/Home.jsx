@@ -6,6 +6,8 @@ import Filters from '../Filters/Filters';
 import AdvertList from '../AdvertList/AdvertList';
 import UserContext from "../../contexts/UserContext";
 
+import './Home.css';
+
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -41,7 +43,7 @@ export default class Home extends React.Component {
 
   render() {
     const { adverts, hasFiltered } = this.state;
-    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `${adverts.count} adverts based on your favourite tag: '${this.context.user.tag}'`;
+    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
     
     !hasFiltered && this.getAdvertsByUserTag(adverts);
     
@@ -49,8 +51,7 @@ export default class Home extends React.Component {
       <div>
         <React.Fragment>
           <Filters onSubmit={this.onFiltered} />
-          <hr />
-          <h1>{h1Message}</h1>
+          <p className="results-message">{h1Message} <b>{!hasFiltered ? this.context.user.tag : ''}</b></p>
           <AdvertList adverts={adverts}/>
         </React.Fragment>
       </div>
