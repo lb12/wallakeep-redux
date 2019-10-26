@@ -44,7 +44,7 @@ export default class Login extends React.Component {
     const { firstname, surname } = this.state.user;
     return (
       <div className="container login">
-        <h1>Sign in</h1>
+        <h1>Login</h1>
         <form className="mt-4" onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="firstname">Firstname</label>
@@ -74,9 +74,9 @@ export default class Login extends React.Component {
           </div>
           <div className="form-group">
             <label htmlFor="tags-select">Tags</label>
-            <Tags required="true" onTagSelected={this.onTagSelected} />
+            <Tags required={true} onTagSelected={this.onTagSelected} />
           </div>
-          <button type="submit" className="btn btn-primary mt-1">Log in</button>
+          <button type="submit" className="btn btn-primary mt-1">Login</button>
         </form>
       </div>
     );
