@@ -92,7 +92,7 @@ export default class Filters extends React.Component {
               <div className="form-group">
                 <label className="input-label"htmlFor="lowerPrice">Lower price</label>
                 <input
-                  type="text"
+                  type="number"
                   name="lowerPrice"
                   id="lowerPrice"
                   className="form-control"
@@ -104,7 +104,7 @@ export default class Filters extends React.Component {
               <div>
                 <label className="input-label" htmlFor="greaterPrice">Greater price</label>
                 <input
-                  type="text"
+                  type="number"
                   name="greaterPrice"
                   id="greaterPrice"
                   className="form-control"

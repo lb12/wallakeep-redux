@@ -133,6 +133,7 @@ export default class EditAdvert extends React.Component {
                     <label className="input-label" htmlFor="name">Name</label>
                     <input
                       type="text"
+                      required
                       name="name"
                       id="name"
                       className="form-control"
@@ -144,6 +145,7 @@ export default class EditAdvert extends React.Component {
                   <div className="form-group">
                   <label className="input-label" htmlFor="description">Description</label>
                     <textarea
+                      required
                       name="description"
                       id="description"
                       className="form-control"
@@ -156,6 +158,7 @@ export default class EditAdvert extends React.Component {
                     <label className="input-label" htmlFor="price">Price</label>
                     <input
                       type="number"
+                      required
                       name="price"
                       id="price"
                       className="form-control"
@@ -166,7 +169,7 @@ export default class EditAdvert extends React.Component {
                   </div>
                   <div className="form-group">
                     <label className="input-label" htmlFor="tags-select">Tags</label>
-                    <Tags multiple={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
+                    <Tags multiple={true} required={true} selectedTags={tags} onTagSelected={this.onSelectChange} />
                   </div>
                   <div className="form-group">
                     <div>
@@ -175,6 +178,7 @@ export default class EditAdvert extends React.Component {
                     <div className="form-check form-check-inline">
                       <input
                         type="radio"
+                        required
                         name="type"
                         id="buy"
                         className="form-check-input"
@@ -187,6 +191,7 @@ export default class EditAdvert extends React.Component {
                     <div className="form-check form-check-inline">
                       <input
                         type="radio"
+                        required
                         name="type"
                         id="sell"
                         className="form-check-input"
@@ -201,6 +206,7 @@ export default class EditAdvert extends React.Component {
                     <label className="input-label" htmlFor="photo">Photo URL</label>
                     <input
                       type={photoFieldType}
+                      required
                       name="photo"
                       id="photo"
                       className="form-control"

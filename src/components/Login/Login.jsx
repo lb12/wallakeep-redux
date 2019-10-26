@@ -50,6 +50,7 @@ export default class Login extends React.Component {
             <label htmlFor="firstname">Firstname</label>
             <input
               type="text"
+              required
               name="firstname"
               value={firstname}
               className="form-control"
@@ -62,6 +63,7 @@ export default class Login extends React.Component {
             <label htmlFor="surname">Surname</label>
             <input
               type="text"
+              required
               name="surname"
               value={surname}
               className="form-control"
@@ -72,7 +74,7 @@ export default class Login extends React.Component {
           </div>
           <div className="form-group">
             <label htmlFor="tags-select">Tags</label>
-            <Tags onTagSelected={this.onTagSelected} />
+            <Tags required="true" onTagSelected={this.onTagSelected} />
           </div>
           <button type="submit" className="btn btn-primary mt-1">Log in</button>
         </form>
