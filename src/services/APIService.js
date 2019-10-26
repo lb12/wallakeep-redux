@@ -5,7 +5,7 @@ const API_URL = `http://localhost:3001/apiv1`;
 
 const getRequest = (url, cancelTokenSource) => {
     return axios.get(url, { cancelToken: cancelTokenSource.token })
-    .then( res => res.data)
+    .then( res => res.data )
     .catch( error => handleRequestError(error));
 };
 
@@ -23,10 +23,10 @@ const putRequest = (url, data, cancelTokenSource) => {
 
 const handleRequestError = error => {
     if (axios.isCancel(error)) {
-        console.log("Request canceled:", error.message);
+        //console.log("Request canceled:", error.message);
         return false;
     }
-    console.error(error);
+    // console.error(error);
 };
 
 /**
@@ -56,7 +56,8 @@ const getQueryParamToken = queryParams => queryParams.length === 0 ? '?' : '&';
  */
 const getAdvertById = async (id, cancelTokenSource) => {
     const res = await getRequest(`${API_URL}/anuncios/${id}`, cancelTokenSource);
-    res.result = new Advert(res.result);
+    if ( res )
+        res.result = new Advert(res.result);
 
     return res;
 };
@@ -75,7 +76,6 @@ const createAdvert = async (_advert, cancelTokenSource) => {
  * PUT update an advert using his Id
  */
 const updateAdvert = async (_advert, cancelTokenSource) => {
-    console.log('actualizo el anuncio ', _advert);
     const res = await putRequest(`${API_URL}/anuncios/${_advert.id}`, _advert, cancelTokenSource);
     res.result = new Advert(res.result);
 
