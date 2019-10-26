@@ -5,6 +5,7 @@ import * as API from '../../services/APIService';
 import Advert from "../Advert/Advert";
 
 import './AdvertDetail.css';
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 export default class AdvertDetail extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class AdvertDetail extends React.Component {
     }
 
     const advertId = this.props.match.params.id;
-    this.getAdvert(advertId);
+    advertId && this.getAdvert(advertId);
   }
 
 
@@ -28,13 +29,13 @@ export default class AdvertDetail extends React.Component {
 
   getAdvert = async advertId => {
     let advert = await API.getAdvertById(advertId, this.source);
-    console.log(advert)
-    if (!advert.success) {
-      this.props.history.push("/404");
-    } else {
-      advert = advert.result;
-      this.setState({ advert });
+
+    if ( !advert || !advert.success) {
+      return;
     }
+    
+    advert = advert.result;
+    this.setState({ advert });
   };
 
   editAdvert = () => {
@@ -53,6 +54,11 @@ export default class AdvertDetail extends React.Component {
             <Advert advert={advert} />
             <button className="btn btn-primary edit-ad-submit-btn" onClick={this.editAdvert}>Edit advert</button>
           </div>
+        }
+        {
+          !advert
+          &&
+          <NotFoundPage />
         }
       </React.Fragment>
     );
