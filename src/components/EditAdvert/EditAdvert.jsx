@@ -83,12 +83,13 @@ export default class EditAdvert extends React.Component {
     const { advert, editingAdvert } = this.state;
     const { success, result } = editingAdvert ? await API.updateAdvert(advert, this.source) : await API.createAdvert(advert, this.source);
 
-    if ( success ) {
-      this.props.history.push(`/advert/${result.id}`);
+    if ( !success ) {
+      // TODO: Show error toast
+      console.warn('Aqui mostrariamos un Toast de error');
       return;
     }
 
-    // TODO: Show error toast    
+    this.props.history.push(`/advert/${result.id}`);    
   };
 
   onInputChange = evt => {

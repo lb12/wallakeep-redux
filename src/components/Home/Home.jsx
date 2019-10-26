@@ -24,16 +24,15 @@ export default class Home extends React.Component {
     this.source.cancel('Home component');
   }
 
-  getAdvertsByUserTag = adverts => {
-    if (adverts.length === 0) {
-      const {tag} = this.context.user;
-      this.searchAdverts( { tag } );
-    }
+  getAdvertsByUserTag = () => {
+    const {tag} = this.context.user;
+    this.searchAdverts( { tag } );
   };
 
   searchAdverts = async filters => {
     const adverts = await API.listAdverts(filters, 5, 1, this.source);
-    this.setState({adverts});
+    if ( adverts )
+      this.setState({adverts});
   };
 
   onFiltered = filters => {
@@ -43,7 +42,7 @@ export default class Home extends React.Component {
 
   render() {
     const { adverts, hasFiltered } = this.state;
-    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
+    const h1Message = hasFiltered ? `${adverts.length ? adverts.count : 0} adverts were found.` : `Adverts based on your favourite tag: `;
     
     !hasFiltered && this.getAdvertsByUserTag(adverts);
     

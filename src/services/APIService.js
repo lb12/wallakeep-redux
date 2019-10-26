@@ -44,6 +44,9 @@ const listAdverts = async ({name, price, tag, selling}, adsPerPage, page, cancel
     queryParams += page > 1 ? (`${getQueryParamToken(queryParams)}skip=${--page * adsPerPage}`) : '';
 
     const res = await getRequest(`${API_URL}/anuncios${queryParams}`, cancelTokenSource);
+
+    if ( !res ) return;
+
     res.results = res.results.map( advert => new Advert(advert));
 
     return res;
@@ -67,6 +70,9 @@ const getAdvertById = async (id, cancelTokenSource) => {
  */
 const createAdvert = async (_advert, cancelTokenSource) => {
     const res = await postRequest(`${API_URL}/anuncios/`, _advert, cancelTokenSource);
+
+    if ( !res ) return { succes: false, result: null } ;
+
     res.result = new Advert(res.result);
 
     return res;
@@ -77,6 +83,9 @@ const createAdvert = async (_advert, cancelTokenSource) => {
  */
 const updateAdvert = async (_advert, cancelTokenSource) => {
     const res = await putRequest(`${API_URL}/anuncios/${_advert.id}`, _advert, cancelTokenSource);
+
+    if ( !res ) return { succes: false, result: null } ;
+
     res.result = new Advert(res.result);
 
     return res;
@@ -86,8 +95,11 @@ const updateAdvert = async (_advert, cancelTokenSource) => {
  * GET all possible tags
  */
 const getTags = async cancelTokenSource => {
-    const tags = await getRequest(`${API_URL}/tags`, cancelTokenSource);
-    return tags.results;
+    const res = await getRequest(`${API_URL}/tags`, cancelTokenSource);
+
+    if ( !res ) return ;
+
+    return res.results;
 };
 
 export {
