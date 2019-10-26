@@ -6,11 +6,7 @@ import Pagination from "../Pagination/Pagination";
 import './AdvertList.css';
 
 export default class AdvertList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+  
   buildAdvertList = adverts => {
     return (
       <div className="adverts-container">
@@ -23,6 +19,7 @@ export default class AdvertList extends React.Component {
 
   render() {
     const adverts = this.props.adverts.results;
+
     return (
       <div>
         {
@@ -30,7 +27,10 @@ export default class AdvertList extends React.Component {
           &&
           adverts.length
           && 
-          this.buildAdvertList(adverts)
+          adverts.count !== 0 ?
+            this.buildAdvertList(adverts)
+          :
+            ''
         }
 
         <Pagination />
