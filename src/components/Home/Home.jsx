@@ -24,6 +24,11 @@ export default class Home extends React.Component {
     this.source.cancel('Home component');
   }
 
+  componentDidMount() {
+    // Compruebo que no haya filtrado (just in case) y obtengo los ads por el tag del user
+    !this.state.hasFiltered && this.getAdvertsByUserTag();
+  }
+
   getAdvertsByUserTag = () => {
     const {tag} = this.context.user;
     this.searchAdverts( { tag } );
@@ -42,9 +47,7 @@ export default class Home extends React.Component {
 
   render() {
     const { adverts, hasFiltered } = this.state;
-    const h1Message = hasFiltered ? `${adverts.length ? adverts.count : 0} adverts were found.` : `Adverts based on your favourite tag: `;
-    
-    !hasFiltered && this.getAdvertsByUserTag(adverts);
+    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
     
     return (
       <div>

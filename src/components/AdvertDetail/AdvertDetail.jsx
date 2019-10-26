@@ -12,7 +12,8 @@ export default class AdvertDetail extends React.Component {
     super(props);
 
     this.state = {
-      advert: null
+      advert: null,
+      advertError: false
     }
 
     const advertId = this.props.match.params.id;
@@ -31,6 +32,7 @@ export default class AdvertDetail extends React.Component {
     let advert = await API.getAdvertById(advertId, this.source);
 
     if ( !advert || !advert.success) {
+      this.setState({ advertError: true });
       return;
     }
     
@@ -44,20 +46,16 @@ export default class AdvertDetail extends React.Component {
   };
 
   render() {
-    const { advert } = this.state;
+    const { advert, advertError } = this.state;
     return (
       <React.Fragment>
         {
-          advert
-          &&
+          !advertError && advert ?
           <div className="detail">
             <Advert advert={advert} />
             <button className="btn btn-primary edit-ad-submit-btn" onClick={this.editAdvert}>Edit advert</button>
           </div>
-        }
-        {
-          !advert
-          &&
+          :
           <NotFoundPage />
         }
       </React.Fragment>

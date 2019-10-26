@@ -3,8 +3,6 @@ import { withRouter } from "react-router-dom";
 
 import './Advert.css';
 
-/* import '../../../public/images/empty_advert_pic.png' */
-
 class Advert extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,7 @@ class Advert extends React.Component {
         
         >
           <div className="pointer" onClick={this.goDetailPage}>
-            <img src={advert.photo ? advert.photo : '/images/empty_advert_pic.png'} alt={`${advert.name}_advert_img`} className="card-img-top"/>
+            <img src={advert.photo ? advert.photo : '/images/empty_advert_pic.png'} className="card-img-top" alt={`${advert.name}_advert_img`} />
             <span className="price">{advert.price} €</span>
             <span className={` type-badge type-badge-${advert.type}`}>{advert.type}</span>
             <div className="card-body">
