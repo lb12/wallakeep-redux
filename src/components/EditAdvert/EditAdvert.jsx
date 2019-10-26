@@ -47,6 +47,10 @@ export default class EditAdvert extends React.Component {
     };
   };
 
+  /**
+   * Se encarga de obtener los datos del anuncio si estamos en la página de edición.
+   * @return Si no hay errores, carga todos los datos, sino devuelve un 404.
+   */
   fillFieldsIfEditingAdvert = async () => {
     const { pathname } = this.props.location;
     const splittedPathname = pathname.split("/");
