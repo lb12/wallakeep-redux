@@ -11,4 +11,8 @@
     .detail .edit-ad-submit-btn {
         margin-top: 5rem;
     }
+
+    .detail .card {
+        width: 30%;
+    }
 }
