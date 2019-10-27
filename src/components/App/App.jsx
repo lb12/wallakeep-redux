@@ -28,7 +28,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const userOnLocalStorage = localStorage.getItem('user');
+    const userOnLocalStorage = localStorage.getItem('wallakeep_user');
     const isUserLogged = this.state.user.firstname !== '';
     
     if (userOnLocalStorage && !isUserLogged){
@@ -41,7 +41,7 @@ export default class App extends React.Component {
   };
 
   isUserLogged = () => {
-    const userOnLocalStorage = localStorage.getItem('user');
+    const userOnLocalStorage = localStorage.getItem('wallakeep_user');
 
     if ( !userOnLocalStorage) return false;
 

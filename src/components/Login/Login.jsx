@@ -16,7 +16,7 @@ export default class Login extends React.Component {
   onSubmit = evt => {
     evt && evt.preventDefault();
 
-    localStorage.setItem('user', JSON.stringify(this.state.user));
+    localStorage.setItem('wallakeep_user', JSON.stringify(this.state.user));
     this.context.onSubmit(this.state.user);
     this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
   };
