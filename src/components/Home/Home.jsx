@@ -7,6 +7,8 @@ import AdvertList from '../AdvertList/AdvertList';
 import Pagination from "../Pagination/Pagination";
 import UserContext from "../../contexts/UserContext";
 
+import { PaginationFilters } from '../../utils/variables';
+
 import './Home.css';
 
 export default class Home extends React.Component {
@@ -15,18 +17,10 @@ export default class Home extends React.Component {
     this.state = {
       adverts: [],
       filters: {},
-      paginationFilters: this.setPaginationFiltersByDefault(),
+      paginationFilters: PaginationFilters,
       hasFiltered: false
     }; 
   }
-
-  setPaginationFiltersByDefault = () => (
-    {
-      page: 1,
-      adsPerPage: 5,
-      disableNextPage: false
-    }
-  );
 
   // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
   source = axios.CancelToken.source();
@@ -41,11 +35,11 @@ export default class Home extends React.Component {
   }
 
   /**
-   * Busca los anuncios en funcion del tag que prefiera el usuario conectado
+   * Guarda el tag en los filtros y busca los anuncios en funcion del tag que prefiera el usuario conectado
    */
   getAdvertsByUserTag = () => {
-    const {tag} = this.context.user;
-    this.setState( { paginationFilters: this.setPaginationFiltersByDefault() }, () => this.searchAdverts( { tag } ) );
+    const { tag } = this.context.user;
+    this.setState({ filters: { tag } }, () => this.searchAdverts( { tag } ))
   };
 
   /**
@@ -54,8 +48,11 @@ export default class Home extends React.Component {
   searchAdverts = async (_filters = undefined) => {
     const filters = _filters ? _filters : this.state.filters;
     const adverts = await API.listAdverts(filters, this.state.paginationFilters, this.source);
-    if ( adverts ) 
+
+    if ( adverts ) {
       this.setState({ adverts });
+      this.checkNextAdsPage(); // Compruebo siempre que busco si hay una página siguiente de anuncios
+    }
   };
 
   /**
