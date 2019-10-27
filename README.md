@@ -1,43 +1,56 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Wallakeep
 
-## Available Scripts
 
-In the project directory, you can run:
+## Introduction
+Wallakeep is a simple Single Page Application (SPA) made with React that emulates an advert selling /buying webpage. It contains a first login, a home page where you can filter by name, price, tag or type (buy, sell) and see rendered the adverts, also you can edit or create new adverts. 
 
-### `npm start`
+On the edit-create page you can see a preview and check what your advert will look like.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Wallakeep has been developed under the 'mobile first' premise.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Requirements and dependencies
 
-### `npm test`
+* Node and Node Package Manager (NPM)
+* React
+* Bootstrap
+* MongoDB
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+An important requirement is the API that is consumed by the SPA. Credits to [Ismael](https://github.com/IsmaelB83) to share it. The link of this API is the next one:
 
-### `npm run build`
+https://github.com/IsmaelB83/keepcoding-backend-node
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Set up
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Set up this project is easy, you could use it without the API, but you would have not any `tag` and, basically, you could do "nothing".
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Under this, you have some instructions to follow and have the project running:
 
-### `npm run eject`
+### Server
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Clone the repo on the previous link.
+* Make sure you have MongoDB installed and running
+* On the API folder, download all the dependencies with `npm install` command.
+* Fill DB with some adverts using `npm init` command.
+* Finally, start the API with `npm start`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The API will be launched under the `http://localhost:3001`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Front 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* Clone this repo.
+* Download all the dependencies with `npm install` command.
+* Use the `npm start` command to run the project in the development mode.
+* Use the `npm run build` command to run run the project in the production mode. The `Error boundary` will work perfect in this mode.
 
-## Learn More
+When `npm start` is done, a new web page will open under the `http://localhost:3000` URL.
+
+## Development notes
+
+I changed all the `componentWillMount()` by `componentDidMount()` because Console was returning a lot of warnings. The content of this method can be included inside `componentDidMount()` or in the component constructor.
+
+On the other hand, `componentWillReceiveProps` was replaced by `UNSAFE_componentWillReceiveProps`. How ever, React recommends to change this method with `static getDerivedStateFromProps()`. In the future, this methods have to be replaced by the recommended one.
+
+## Keep learning more 
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
