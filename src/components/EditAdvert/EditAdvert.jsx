@@ -84,8 +84,7 @@ export default class EditAdvert extends React.Component {
     const { success, result } = editingAdvert ? await API.updateAdvert(advert, this.source) : await API.createAdvert(advert, this.source);
 
     if ( !success ) {
-      // TODO: Show error toast
-      console.warn('Aqui mostrariamos un Toast de error');
+      console.error('No se ha podido guardar el anuncio');
       return;
     }
 
