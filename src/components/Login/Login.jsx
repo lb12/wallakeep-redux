@@ -16,7 +16,6 @@ export default class Login extends React.Component {
   onSubmit = evt => {
     evt && evt.preventDefault();
 
-    console.log(this.state.user);
     localStorage.setItem('user', JSON.stringify(this.state.user));
     this.context.onSubmit(this.state.user);
     this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
@@ -37,7 +36,7 @@ export default class Login extends React.Component {
     let user = this.state.user;
     user.tag = optionSelected;
 
-    this.setState({ user }, () => console.log(this.state.user));
+    this.setState({ user });
   };
 
   render() {

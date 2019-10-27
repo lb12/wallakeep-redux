@@ -64,7 +64,7 @@ export default class Filters extends React.Component {
     let filters = this.state.filters;
     filters.tag = optionSelected;
 
-    this.setState({ filters }, () => console.log(this.state.filters));
+    this.setState({ filters });
   };
 
   render() {
