@@ -32,7 +32,7 @@ const handleRequestError = error => {
 /**
  * GET all adverts filtering and using pagination
  */
-const listAdverts = async ({name, price, tag, selling}, adsPerPage, page, cancelTokenSource) => {
+const listAdverts = async ({name, price, tag, selling}, {adsPerPage, page}, cancelTokenSource) => {
     let queryParams = '';
 
     if (name && name.length) queryParams += (`${getQueryParamToken(queryParams)}name=${name}`); 

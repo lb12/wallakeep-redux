@@ -27,7 +27,7 @@
 
 @media(min-width: 992px) {
     .adverts-container .card {
-        flex-basis: 20%;
+        flex-basis: 25%;
         margin-right: 1rem;
     }
 }

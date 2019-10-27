@@ -1,7 +1,6 @@
 import React from "react";
 
 import Advert from '../Advert/Advert';
-import Pagination from "../Pagination/Pagination";
 
 import './AdvertList.css';
 
@@ -32,8 +31,6 @@ export default class AdvertList extends React.Component {
           :
             ''
         }
-
-        <Pagination />
       </div>
     );
   }

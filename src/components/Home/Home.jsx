@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as API from '../../services/APIService';
 import Filters from '../Filters/Filters';
 import AdvertList from '../AdvertList/AdvertList';
+import Pagination from "../Pagination/Pagination";
 import UserContext from "../../contexts/UserContext";
 
 import './Home.css';
@@ -13,9 +14,19 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       adverts: [],
+      filters: {},
+      paginationFilters: this.setPaginationFiltersByDefault(),
       hasFiltered: false
     }; 
   }
+
+  setPaginationFiltersByDefault = () => (
+    {
+      page: 1,
+      adsPerPage: 5,
+      disableNextPage: false
+    }
+  );
 
   // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
   source = axios.CancelToken.source();
@@ -29,24 +40,54 @@ export default class Home extends React.Component {
     !this.state.hasFiltered && this.getAdvertsByUserTag();
   }
 
+  /**
+   * Busca los anuncios en funcion del tag que prefiera el usuario conectado
+   */
   getAdvertsByUserTag = () => {
     const {tag} = this.context.user;
-    this.searchAdverts( { tag } );
+    this.setState( { paginationFilters: this.setPaginationFiltersByDefault() }, () => this.searchAdverts( { tag } ) );
   };
 
-  searchAdverts = async filters => {
-    const adverts = await API.listAdverts(filters, 5, 1, this.source);
-    if ( adverts )
-      this.setState({adverts});
+  /**
+   * Busca los anuncios en funcion de los filtros y el paginado
+   */
+  searchAdverts = async (_filters = undefined) => {
+    const filters = _filters ? _filters : this.state.filters;
+    const adverts = await API.listAdverts(filters, this.state.paginationFilters, this.source);
+    if ( adverts ) 
+      this.setState({ adverts });
   };
+
+  /**
+   * Comprueba si hay más anuncios en la siguiente página.
+   * Este método es necesario ya que la API no nos ofrece un conteo, hay que sacarlo por nosotros mismos.
+   */
+  checkNextAdsPage = async () => {
+    const { filters, paginationFilters: pagFilters } = this.state;
+    pagFilters.page += 1;
+    const adverts = await API.listAdverts(filters, pagFilters, this.source);
+    pagFilters.page -= 1; // Deshacemos el cambio de la página
+
+    // Si el API no responde para más anuncios o ya no hay más anuncios, bloqueamos el botón de la página siguiente
+    pagFilters.disableNextPage = (!adverts || adverts.count === 0);
+    this.setState({paginationFilters: pagFilters});
+  };
+
+  // Events
 
   onFiltered = filters => {
-    this.searchAdverts(filters);
-    this.setState({hasFiltered: true});
+    this.setState( { filters, hasFiltered: true }, () => this.searchAdverts(filters) );
+  };
+
+  onPageChanged = paginationFilters => {
+    this.setState( { paginationFilters }, () => {
+      this.searchAdverts();
+      this.checkNextAdsPage();
+    });
   };
 
   render() {
-    const { adverts, hasFiltered } = this.state;
+    const { adverts, hasFiltered, paginationFilters } = this.state;
     const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
     
     return (
@@ -55,6 +96,7 @@ export default class Home extends React.Component {
           <Filters onSubmit={this.onFiltered} />
           <p className="results-message">{h1Message} <b>{!hasFiltered ? this.context.user.tag : ''}</b></p>
           <AdvertList adverts={adverts}/>
+          <Pagination paginationFilters={paginationFilters} onPageChanged={this.onPageChanged} />
         </React.Fragment>
       </div>
     );
