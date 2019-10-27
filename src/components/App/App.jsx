@@ -59,7 +59,7 @@ export default class App extends React.Component {
         <ErrorBoundary>
           <UserContext.Provider value={value}>        
             <Router>
-              <div id="main">
+              
                 {
                   !this.isUserLogged()
                   &&
@@ -72,7 +72,7 @@ export default class App extends React.Component {
                   &&
                   <React.Fragment>              
                     <Navbar/>
-
+                    <div id="main">
                       <Switch>
                         <Route path="/login" component={Login} />
                         <Route path="/profile" component={Profile} />
@@ -82,9 +82,9 @@ export default class App extends React.Component {
                         <Route exact path="/" component={Home} />
                         <Route component={NotFoundPage} />
                       </Switch>
+                    </div>
                 </React.Fragment>
                 }
-              </div>
             </Router>
           </UserContext.Provider>
         </ErrorBoundary>
