@@ -1,8 +1,25 @@
 import React from 'react';
 import { render } from 'react-dom';
+
 import './index.css';
 import App from './components/App/App.jsx';
 import * as serviceWorker from './serviceWorker';
+import { storeConfiguration } from './store';
+// import { setUser } from './store/actions';
+
+const store = storeConfiguration();
+
+/* 
+const user = {
+    firstname: 'David',
+    surname: 'Escribano', 
+    tag: 'mobile' 
+}; 
+
+store.dispatch(setUser(user));
+console.log(store.getState()); 
+*/
+
 
 render(<App />, document.getElementById('root'));
 
