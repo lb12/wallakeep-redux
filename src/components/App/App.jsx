@@ -5,67 +5,30 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import EditAdvert from '../EditAdvert/EditAdvert';
 import AdvertDetail from '../AdvertDetail/AdvertDetail';
-import Login from '../Login/Login';
-import Profile from '../Profile/Profile';
+import Login from '../Login';
+import Profile from '../Profile';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import Home from '../Home/Home';
+import Home from '../Home';
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-
-import { getUser } from '../../utils/storage';
-
-// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
-
 import "./App.css";
+
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: {
-        firstname: '',
-        surname: '',
-        tag: '',
-      }
-    }
+    this.isUserLogged = this.isUserLogged.bind(this);
   }
 
-  componentDidMount() {
-    const userOnLocalStorage = getUser();
-    const isUserLogged = this.state.user.firstname !== '';
-    
-    if (userOnLocalStorage && !isUserLogged){
-      this.onUserLogin(userOnLocalStorage);
-    }
-  }
-
-  onUserLogin = user => {
-    this.setState({ user });
-  };
-
-  isUserLogged = () => {
-    const userOnLocalStorage = getUser();
-
-    if ( !userOnLocalStorage) return false;
-
-    return this.state.user.firstname !== '';
-  };
+  isUserLogged() { return this.props.isLogged; }
 
   render() {
-    // QUITO_CONTEXTO
-    /* const value = {
-      user: this.state.user,
-      onSubmit: this.onUserLogin
-    }; */
     const { store } = this.props;
 
     return (  
       <div>
-        <ErrorBoundary>
-          {/* <UserContext.Provider value={value}> */}        
+        <ErrorBoundary> 
           <Provider store={store}>
             <Router>
-              
                 {
                   !this.isUserLogged()
                   &&
@@ -93,7 +56,6 @@ export default class App extends React.Component {
                 }
             </Router>
           </Provider>
-          {/* </UserContext.Provider> */}
         </ErrorBoundary>
       </div>
     );

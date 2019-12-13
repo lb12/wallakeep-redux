@@ -2,24 +2,22 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import './index.css';
-import App from './components/App/App.jsx';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { storeConfiguration } from './store';
-import { setUser } from './store/actions';
-
-const store = storeConfiguration();
-
-
-const user = {
-    firstname: 'David',
-    surname: 'Escribano', 
-    tag: 'mobile' 
-}; 
-
-store.dispatch(setUser(user));
-console.log(store.getState()); 
+import { initialState } from './store/reducers';
+import { getUser, setUser } from './utils/storage'
 
 
+const preloadedState = { ...initialState, user: getUser() || {} };
+const store = storeConfiguration(preloadedState);
+
+
+// Save any user change into the LocalStorage
+store.subscribe(() => {
+    const { user } = store.getState();
+    user && setUser(user);
+});
 
 render(<App store={store} />, document.getElementById('root'));
 

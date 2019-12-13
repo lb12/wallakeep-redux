@@ -1,12 +1,10 @@
 import React from "react";
-// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import './Profile.css';
 
 export default class Profile extends React.Component {
   render() {
-    // const { user } = this.context; // QUITO_CONTEXTO
-    const user = { firstname: 'David', surname: 'Escribano', tag: 'mobile' };  // QUITO_CONTEXTO
+    const { user } = this.props;
     const { firstname, surname, tag } = user;
     return (
       <div>
@@ -26,4 +24,3 @@ export default class Profile extends React.Component {
     );
   }
 }
-// Profile.contextType = UserContext; // QUITO_CONTEXTO

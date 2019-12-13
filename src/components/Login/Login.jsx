@@ -1,24 +1,25 @@
 import React from "react";
-import Tags from "../Tags/Tags";
-// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
+import Tags from "../Tags/Tags";
 import './Login.css';
-import { setUser } from '../../utils/storage';
 
 export default class Login extends React.Component {
-  constructor(props/* , context */) { // QUITO_CONTEXTO
-    super(props/* , context */); // QUITO_CONTEXTO
+  constructor(props) {
+    super(props);
     
     this.state = {
-      user: { firstname: 'David', surname: 'Escribano', tag: 'mobile' }  // QUITO_CONTEXTO //this.context.user
+      user: { 
+        firstname: '', 
+        surname: '', 
+        tag: '' 
+      }
     };
   }
   
   onSubmit = evt => {
     evt && evt.preventDefault();
-    setUser(this.state.user);
-    // this.context.onSubmit(this.state.user); // QUITO_CONTEXTO
-    this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
+    this.props.setUser(this.state.user); // Save user into redux-store
+    this.props.history.push('/'); //  Redirect user to home page always
   };
 
   onInputChange = evt => {
@@ -81,4 +82,3 @@ export default class Login extends React.Component {
     );
   }
 }
-// Login.contextType = UserContext; // QUITO_CONTEXTO
