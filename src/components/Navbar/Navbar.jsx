@@ -12,7 +12,6 @@ export default class Navbar extends React.Component {
   logout = evt => {
     evt && evt.preventDefault();
 
-    // this.props.setUser({});
     deleteUser();
     window.location.reload();
   };
