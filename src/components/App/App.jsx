@@ -1,4 +1,5 @@
 import React from "react";
+import { Provider } from 'react-redux'; 
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from '../Navbar/Navbar';
@@ -54,11 +55,13 @@ export default class App extends React.Component {
       user: this.state.user,
       onSubmit: this.onUserLogin
     }; */
+    const store = this.props;
 
     return (  
       <div>
         <ErrorBoundary>
           {/* <UserContext.Provider value={value}> */}        
+          <Provider store={store}>
             <Router>
               
                 {
@@ -87,6 +90,7 @@ export default class App extends React.Component {
                 </React.Fragment>
                 }
             </Router>
+          </Provider>
           {/* </UserContext.Provider> */}
         </ErrorBoundary>
       </div>
