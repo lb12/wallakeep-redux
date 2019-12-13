@@ -3,6 +3,7 @@ import Tags from "../Tags/Tags";
 // import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import './Login.css';
+import { setUser } from '../../utils/storage';
 
 export default class Login extends React.Component {
   constructor(props/* , context */) { // QUITO_CONTEXTO
@@ -15,8 +16,7 @@ export default class Login extends React.Component {
   
   onSubmit = evt => {
     evt && evt.preventDefault();
-
-    localStorage.setItem('wallakeep_user', JSON.stringify(this.state.user));
+    setUser(this.state.user);
     // this.context.onSubmit(this.state.user); // QUITO_CONTEXTO
     this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
   };

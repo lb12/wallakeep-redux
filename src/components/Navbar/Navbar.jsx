@@ -1,6 +1,7 @@
 import React from "react";
-
 import { Link } from 'react-router-dom';
+
+import { deleteUser } from '../../utils/storage';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class Navbar extends React.Component {
   logout = evt => {
     evt && evt.preventDefault();
 
-    localStorage.removeItem('wallakeep_user');
+    deleteUser();
     window.location.reload();
   };
 

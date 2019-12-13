@@ -11,6 +11,8 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Home from '../Home/Home';
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
+import { getUser } from '../../utils/storage';
+
 // import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import "./App.css";
@@ -29,11 +31,11 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const userOnLocalStorage = localStorage.getItem('wallakeep_user');
+    const userOnLocalStorage = getUser();
     const isUserLogged = this.state.user.firstname !== '';
     
     if (userOnLocalStorage && !isUserLogged){
-      this.onUserLogin(JSON.parse(userOnLocalStorage));
+      this.onUserLogin(userOnLocalStorage);
     }
   }
 
@@ -42,7 +44,7 @@ export default class App extends React.Component {
   };
 
   isUserLogged = () => {
-    const userOnLocalStorage = localStorage.getItem('wallakeep_user');
+    const userOnLocalStorage = getUser();
 
     if ( !userOnLocalStorage) return false;
 
