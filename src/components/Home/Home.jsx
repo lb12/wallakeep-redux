@@ -44,8 +44,7 @@ export default class Home extends React.Component {
   /**
    * Busca los anuncios en funcion de los filtros y el paginado
    */
-  searchAdverts = async (_filters = undefined) => {
-    const filters = _filters ? _filters : this.state.filters;
+  searchAdverts = async (filters = this.state.filters) => {
     const adverts = await API.listAdverts(filters, this.state.paginationFilters, this.source);
 
     if ( adverts ) {
