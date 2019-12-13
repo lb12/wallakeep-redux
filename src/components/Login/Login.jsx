@@ -1,15 +1,15 @@
 import React from "react";
 import Tags from "../Tags/Tags";
-import UserContext from "../../contexts/UserContext";
+// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import './Login.css';
 
 export default class Login extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props/* , context */) { // QUITO_CONTEXTO
+    super(props/* , context */); // QUITO_CONTEXTO
     
     this.state = {
-      user: this.context.user
+      user: { firstname: 'David', surname: 'Escribano', tag: 'mobile' }  // QUITO_CONTEXTO //this.context.user
     };
   }
   
@@ -17,7 +17,7 @@ export default class Login extends React.Component {
     evt && evt.preventDefault();
 
     localStorage.setItem('wallakeep_user', JSON.stringify(this.state.user));
-    this.context.onSubmit(this.state.user);
+    // this.context.onSubmit(this.state.user); // QUITO_CONTEXTO
     this.props.history.push(`/`); // Le mando siempre a la pantalla de la Home
   };
 
@@ -81,4 +81,4 @@ export default class Login extends React.Component {
     );
   }
 }
-Login.contextType = UserContext;
+// Login.contextType = UserContext; // QUITO_CONTEXTO

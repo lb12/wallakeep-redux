@@ -10,7 +10,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Home from '../Home/Home';
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
-import UserContext from "../../contexts/UserContext";
+// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import "./App.css";
 
@@ -49,15 +49,16 @@ export default class App extends React.Component {
   };
 
   render() {
-    const value = {
+    // QUITO_CONTEXTO
+    /* const value = {
       user: this.state.user,
       onSubmit: this.onUserLogin
-    };
+    }; */
 
     return (  
       <div>
         <ErrorBoundary>
-          <UserContext.Provider value={value}>        
+          {/* <UserContext.Provider value={value}> */}        
             <Router>
               
                 {
@@ -86,7 +87,7 @@ export default class App extends React.Component {
                 </React.Fragment>
                 }
             </Router>
-          </UserContext.Provider>
+          {/* </UserContext.Provider> */}
         </ErrorBoundary>
       </div>
     );

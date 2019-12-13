@@ -5,7 +5,7 @@ import * as API from '../../services/APIService';
 import Filters from '../Filters/Filters';
 import AdvertList from '../AdvertList/AdvertList';
 import Pagination from "../Pagination/Pagination";
-import UserContext from "../../contexts/UserContext";
+// import UserContext from "../../contexts/UserContext"; // QUITO_CONTEXTO
 
 import { PaginationFilters } from '../../utils/variables';
 
@@ -38,7 +38,7 @@ export default class Home extends React.Component {
    * Guarda el tag en los filtros y busca los anuncios en funcion del tag que prefiera el usuario conectado
    */
   getAdvertsByUserTag = () => {
-    const { tag } = this.context.user;
+    const { tag } = 'mobile'; // this.context.user;  // Aqui debe leer el tag por el user.tag de la prop // QUITO_CONTEXTO
     this.setState({ filters: { tag } }, () => this.searchAdverts( { tag } ))
   };
 
@@ -91,7 +91,7 @@ export default class Home extends React.Component {
       <div>
         <React.Fragment>
           <Filters onSubmit={this.onFiltered} />
-          <p className="results-message">{h1Message} <b>{!hasFiltered ? this.context.user.tag : ''}</b></p>
+          <p className="results-message">{h1Message} <b>{!hasFiltered ? this.state.filters.tag /* // QUITO_CONTEXTO this.context.user.tag */ : ''}</b></p>
           <AdvertList adverts={adverts}/>
           <Pagination paginationFilters={paginationFilters} onPageChanged={this.onPageChanged} />
         </React.Fragment>
@@ -99,4 +99,4 @@ export default class Home extends React.Component {
     );
   }
 }
-Home.contextType = UserContext;
+// Home.contextType = UserContext; // QUITO_CONTEXTO
