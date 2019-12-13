@@ -1,6 +1,6 @@
 import React from "react";
 
-import Advert from '../Advert/Advert';
+import Advert from '../Advert';
 
 import './AdvertList.css';
 

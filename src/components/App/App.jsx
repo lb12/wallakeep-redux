@@ -2,14 +2,14 @@ import React from "react";
 import { Provider } from 'react-redux'; 
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Navbar from '../Navbar/Navbar';
-import EditAdvert from '../EditAdvert/EditAdvert';
-import AdvertDetail from '../AdvertDetail/AdvertDetail';
+import Navbar from '../Navbar';
+import EditAdvert from '../EditAdvert';
+import AdvertDetail from '../AdvertDetail';
 import Login from '../Login';
 import Profile from '../Profile';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import NotFoundPage from '../NotFoundPage';
 import Home from '../Home';
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary";
 import "./App.css";
 
 

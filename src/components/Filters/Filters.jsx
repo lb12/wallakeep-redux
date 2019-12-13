@@ -1,5 +1,5 @@
 import React from "react";
-import Tags from "../Tags/Tags";
+import Tags from "../Tags";
 
 import './Filters.css';
 

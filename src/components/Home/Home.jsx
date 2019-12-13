@@ -2,9 +2,9 @@ import React from "react";
 import axios from 'axios';
 
 import * as API from '../../services/APIService';
-import Filters from '../Filters/Filters';
-import AdvertList from '../AdvertList/AdvertList';
-import Pagination from "../Pagination/Pagination";
+import Filters from '../Filters';
+import AdvertList from '../AdvertList';
+import Pagination from "../Pagination";
 
 import { PaginationFilters } from '../../utils/variables';
 

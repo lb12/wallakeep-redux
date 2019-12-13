@@ -2,11 +2,11 @@ import React from "react";
 import axios from "axios";
 
 import * as API from "../../services/APIService";
-import Tags from "../Tags/Tags";
-import Advert from "../Advert/Advert";
+import Tags from "../Tags";
+import Advert from "../Advert";
 
 import './EditAdvert.css';
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import NotFoundPage from "../NotFoundPage";
 
 // Este componente se encarga de manejar la creación y la edición de un anuncio
 export default class EditAdvert extends React.Component {

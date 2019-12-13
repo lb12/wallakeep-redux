@@ -1,6 +1,6 @@
 import React from "react";
 
-import Tags from "../Tags/Tags";
+import Tags from "../Tags";
 import './Login.css';
 
 export default class Login extends React.Component {

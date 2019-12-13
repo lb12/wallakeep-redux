@@ -2,10 +2,10 @@ import React from "react";
 import axios from "axios";
 
 import * as API from '../../services/APIService';
-import Advert from "../Advert/Advert";
+import Advert from "../Advert";
 
 import './AdvertDetail.css';
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import NotFoundPage from "../NotFoundPage";
 
 export default class AdvertDetail extends React.Component {
   constructor(props) {
