@@ -55,7 +55,7 @@ export default class App extends React.Component {
       user: this.state.user,
       onSubmit: this.onUserLogin
     }; */
-    const store = this.props;
+    const { store } = this.props;
 
     return (  
       <div>
