@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdvertList component test Renders correctly 1`] = `
+<div>
+  <div
+    className="adverts-container"
+  >
+    <withRouter(Advert)
+      advert={
+        Object {
+          "createdAt": "2019-10-21T15:26:08.224Z",
+          "description": "El mejor ratón gamer del mercado. Como nuevo (1 año)",
+          "id": "5dadce10717326158c572a73",
+          "name": "Raton Gaming Razer Mamba",
+          "photo": "http://localhost:3001/images/anuncios/ratonmamba.jpg",
+          "price": 35.6,
+          "tags": Array [
+            "lifestyle",
+            "mobile",
+            "work",
+          ],
+          "type": "sell",
+          "updatedAt": "2019-12-15T17:56:22.695Z",
+        }
+      }
+      key="5dadce10717326158c572a73"
+    />
+  </div>
+</div>
+`;
+
+exports[`AdvertList component test should render correctly 1`] = `
+<div>
+  <div
+    className="adverts-container"
+  >
+    <withRouter(Advert)
+      advert={
+        Object {
+          "createdAt": "2019-10-21T15:26:08.224Z",
+          "description": "El mejor ratón gamer del mercado. Como nuevo (1 año)",
+          "id": "5dadce10717326158c572a73",
+          "name": "Raton Gaming Razer Mamba",
+          "photo": "http://localhost:3001/images/anuncios/ratonmamba.jpg",
+          "price": 35.6,
+          "tags": Array [
+            "lifestyle",
+            "mobile",
+            "work",
+          ],
+          "type": "sell",
+          "updatedAt": "2019-12-15T17:56:22.695Z",
+        }
+      }
+      key="5dadce10717326158c572a73"
+    />
+  </div>
+</div>
+`;
