@@ -38,6 +38,7 @@ All the basic tests were done.
   - *Async action*: *UPDATE_ADVERT* was tested to see if the action resolved fine.
   - *Reducer*: check *SET_USER* and check initial adverts state.
   - *To do a snapshot testing to a component*: *AdvertList* component was tested.
+  - *Check if a component works running a store action*: '*setUser*' action in the *Login* component was tested checking if it is called on the 'onSubmit' of the form.
 
 
 ## Introduction
