@@ -1,7 +1,7 @@
 import * as Types from "./types";
 
 export const initialState = {
-    filter: {},
+    filter: {}, // (no los he añadido al final, pero los dejo indicados para tenerlo como referencia en el futuro)
     user: {},
     adverts: [],
     currentAdvert: {}
@@ -16,6 +16,7 @@ export const user = (state = initialState.user, action) => {
     }
 }
 
+// (no los he añadido al final, pero los dejo indicados para tenerlo como referencia en el futuro)
 export const filter = (state = initialState.filter, action) => {
     switch (action.type) {
         case Types.SET_FILTER:

@@ -10,7 +10,7 @@ export const setUser = user => ({
 });
 
 
-// Filter actions
+// Filter actions (no los he añadido al final, pero los dejo indicados para tenerlo como referencia en el futuro)
 
 export const setFilter = filter => ({
     type: Types.SET_FILTER,
