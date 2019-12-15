@@ -64,15 +64,9 @@ export default class EditAdvert extends React.Component {
       return;
     }
 
-    const result = await API.getAdvertById(splittedPathname[2], this.source);
-
-    if ( !result || !result.success ) {
-      this.setEditingError();
-      return;
-    } 
-
-    const advert = result.result;
-    this.setState({ advert, editingAdvert: true });    
+    await this.props.loadAdvert(splittedPathname[2], this.source);    
+   
+    this.setState({ advert: this.props.advert.result, editingAdvert: true });    
   };
 
   setEditingError = () => this.setState({ advertError: true, editingAdvert: true });
@@ -81,7 +75,13 @@ export default class EditAdvert extends React.Component {
     evt && evt.preventDefault();
 
     const { advert, editingAdvert } = this.state;
-    const { success, result } = editingAdvert ? await API.updateAdvert(advert, this.source) : await API.createAdvert(advert, this.source);
+
+    if (editingAdvert)
+      await this.props.updateAdvert(advert, this.source);
+    else
+      await this.props.createAdvert(advert, this.source);
+
+    const { success, result } = this.props.advert;
 
     if ( !success ) {
       console.error('No se ha podido guardar el anuncio');
@@ -123,7 +123,7 @@ export default class EditAdvert extends React.Component {
       <div>
         <h1 className="text-center mt-4">{updateOrCreateAdvert} advert</h1>
         {
-          !advertError ?
+          !advertError && this.props.advert?
           (
             <form className="create-edit-container mt-4" onSubmit={this.onSubmit}>
               <div className="main-info-container">

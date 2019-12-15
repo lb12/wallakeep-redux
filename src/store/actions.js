@@ -46,6 +46,31 @@ export const fetchAdvert = (id, source) => (
     }
 );
 
+export const createAdvert = (advert, source) => {
+    return async function (dispatch, getState) {
+      dispatch(createAdvertRequest(advert));
+      try {
+        const response = await API.createAdvert(advert, source);
+        dispatch(createAdvertSuccess(response));
+      } catch (error) {
+        dispatch(createAdvertFailure(error));
+      }
+    }
+};
+
+export const updateAdvert = (advert, source) => {
+    return async function (dispatch, getState) {
+      dispatch(updateAdvertRequest(advert));
+      try {
+        const response = await API.updateAdvert(advert, source);
+        dispatch(updateAdvertSuccess(response));
+      } catch (error) {
+        dispatch(updateAdvertFailure(error));
+      }
+    }
+};
+  
+
 // FETCH ADVERTS
 export const fetchAdvertsRequest = () => ({
     type: Types.FETCH_ADVERTS_REQUEST
@@ -74,5 +99,38 @@ export const fetchAdvertSuccess = advert => ({
 
 export const fetchAdvertFailure = error => ({
     type: Types.FETCH_ADVERT_FAILURE,
+    error
+});
+
+// ADVERT CREATION
+
+export const createAdvertRequest = () => ({
+    type: Types.CREATE_ADVERT_REQUEST,
+});
+
+export const createAdvertSuccess = advert => ({
+    type: Types.CREATE_ADVERT_SUCCESS,
+    advert
+});
+
+export const createAdvertFailure = error => ({
+    type: Types.CREATE_ADVERT_FAILURE,
+    error
+});
+
+
+// ADVERT EDITION
+
+export const updateAdvertRequest = () => ({
+    type: Types.UPDATE_ADVERT_REQUEST,
+});
+
+export const updateAdvertSuccess = advert => ({
+    type: Types.UPDATE_ADVERT_SUCCESS,
+    advert
+});
+
+export const updateAdvertFailure = error => ({
+    type: Types.UPDATE_ADVERT_FAILURE,
     error
 });
