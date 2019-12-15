@@ -1,3 +1,9 @@
+import { connect } from 'react-redux';
+
 import AdvertList from './AdvertList';
 
-export default AdvertList;
+const mapStateToProps = state => ({
+    adverts: state.adverts
+});
+
+export default connect(mapStateToProps)(AdvertList);

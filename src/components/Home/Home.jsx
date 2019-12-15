@@ -13,8 +13,7 @@ import './Home.css';
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      adverts: [],
+    this.state = {      
       filters: {},
       paginationFilters: PaginationFilters,
       hasFiltered: false
@@ -45,12 +44,8 @@ export default class Home extends React.Component {
    * Busca los anuncios en funcion de los filtros y el paginado
    */
   searchAdverts = async (filters = this.state.filters) => {
-    const adverts = await API.listAdverts(filters, this.state.paginationFilters, this.source);
-
-    if ( adverts ) {
-      this.setState({ adverts });
-      this.checkNextAdsPage(); // Compruebo siempre que busco si hay una página siguiente de anuncios
-    }
+    await this.props.loadAdverts(filters, this.state.paginationFilters, this.source);
+    this.checkNextAdsPage(); // Compruebo siempre que busco si hay una página siguiente de anuncios
   };
 
   /**
@@ -60,7 +55,7 @@ export default class Home extends React.Component {
   checkNextAdsPage = async () => {
     const { filters, paginationFilters: pagFilters } = this.state;
     pagFilters.page += 1;
-    const adverts = await API.listAdverts(filters, pagFilters, this.source);
+    const adverts = await API.listAdverts(filters, pagFilters, this.source); // Aqui no me interesa pasarlo por redux
     pagFilters.page -= 1; // Deshacemos el cambio de la página
 
     // Si el API no responde para más anuncios o ya no hay más anuncios, bloqueamos el botón de la página siguiente
@@ -82,15 +77,15 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const { adverts, hasFiltered, paginationFilters } = this.state;
-    const h1Message = hasFiltered ? `${adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
+    const { hasFiltered, paginationFilters } = this.state;
+    const h1Message = hasFiltered ? `${this.props.adverts.count} adverts were found.` : `Adverts based on your favourite tag: `;
     
     return (
       <div>
         <React.Fragment>
           <Filters onSubmit={this.onFiltered} />
           <p className="results-message">{h1Message} <b>{!hasFiltered ? this.props.user.tag : ''}</b></p>
-          <AdvertList adverts={adverts}/>
+          <AdvertList />
           <Pagination paginationFilters={paginationFilters} onPageChanged={this.onPageChanged} />
         </React.Fragment>
       </div>

@@ -1,41 +1,35 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import * as API from '../../services/APIService';
 import Advert from "../Advert";
-
-import './AdvertDetail.css';
 import NotFoundPage from "../NotFoundPage";
+import './AdvertDetail.css';
 
 function AdvertDetail(props) {
   const [advert, setAdvert] = useState(null);
-  const [advertError, setAdvertError] = useState(false);  
   const source = axios.CancelToken.source();
   const advertId = props.match.params.id;
 
   useEffect(() => {
     const getAdvert = async () => {
-      if (advert) return;
-  
-      let _advert = await API.getAdvertById(advertId, source);
-  
-      if ( !_advert || !_advert.success ) {
-        setAdvertError(true);
-        return;
-      }
+      await props.loadAdvert(advertId, source); // API.getAdvertById(advertId, source);
+      let _advert = props.advert; 
+      
+      if ( !_advert || !_advert.success ) return;
       
       _advert = _advert.result;
       setAdvert(_advert);
     };
-
+    
     getAdvert();
-
+    
     return function cleanup() {
       // Cancela cualquier peticion que no se haya podido completar debido a que el componente se haya desmontado
       source.cancel('AdvertDetail component');
     }
-  });
+  }, [advert]);
   
+  const advertLoaded = () => (Object.entries(props.advert).length > 0);
 
   const editAdvert = () => {
     props.history.push(`/edit-advert/${advertId}`);
@@ -44,9 +38,9 @@ function AdvertDetail(props) {
   return (
     <React.Fragment>
       {
-        !advertError && advert ?
+        advertLoaded() ?
         <div className="detail">
-          <Advert advert={advert} />
+          <Advert advert={props.advert.result} />
           <button className="btn btn-primary edit-ad-submit-btn" onClick={editAdvert}>Edit advert</button>
         </div>
         :

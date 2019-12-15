@@ -3,7 +3,8 @@ import * as Types from "./types";
 export const initialState = {
     filter: {},
     user: {},
-    adverts: []
+    adverts: [],
+    currentAdvert: {}
 };
 
 export const user = (state = initialState.user, action) => {
@@ -27,7 +28,16 @@ export const filter = (state = initialState.filter, action) => {
 export const adverts = (state = initialState.adverts, action) => {
     switch (action.type) {
         case Types.FETCH_ADVERTS_SUCCESS:
-            return action.adverts;  
+            return action.adverts;
+        default: 
+            return state;
+    }
+}
+
+export const currentAdvert = (state = initialState.currentAdvert, action) => {
+    switch (action.type) {
+        case Types.FETCH_ADVERT_SUCCESS:
+            return action.advert;
         default: 
             return state;
     }
