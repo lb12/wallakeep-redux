@@ -12,6 +12,7 @@ function AdvertDetail(props) {
 
   useEffect(() => {
     const getAdvert = async () => {
+      if (advertLoaded()) return;
       await props.loadAdvert(advertId, source); // API.getAdvertById(advertId, source);
       let _advert = props.advert; 
       
@@ -29,7 +30,7 @@ function AdvertDetail(props) {
     }
   }, [advert]);
   
-  const advertLoaded = () => (Object.entries(props.advert).length > 0);
+  const advertLoaded = () => (Object.entries(props.advert).length > 0 && props.advert.result.id === advertId);
 
   const editAdvert = () => {
     props.history.push(`/edit-advert/${advertId}`);
