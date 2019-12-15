@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import * as API from "../../services/APIService";
 import Tags from "../Tags";
 import Advert from "../Advert";
 
@@ -64,7 +63,7 @@ export default class EditAdvert extends React.Component {
       return;
     }
 
-    await this.props.loadAdvert(splittedPathname[2], this.source);    
+    await this.props.loadAdvert(splittedPathname[2], this.source);
    
     this.setState({ advert: this.props.advert.result, editingAdvert: true });    
   };

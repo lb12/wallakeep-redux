@@ -34,14 +34,18 @@ export const fetchAdverts = (filters, paginationFilters, source) => (
 
 export const fetchAdvert = (id, source) => (
     async (dispatch, getState) => {
-        dispatch(fetchAdvertRequest());
-        try {
-            const advert = await API.getAdvertById(id, source);
-            
-            if (advert.success) dispatch(fetchAdvertSuccess(advert));
-            else dispatch(fetchAdvertFailure('Advert not found'));            
-        } catch (error) {
-            dispatch(fetchAdvertFailure(error));
+        const { currentAdvert } = getState(); 
+        // Solo pido info al API en el caso de que no esté cargada
+        if (Object.entries(currentAdvert).length === 0 || currentAdvert.result.id !== id ) {
+            dispatch(fetchAdvertRequest());
+            try {
+                const advert = await API.getAdvertById(id, source);
+                
+                if (advert.success) dispatch(fetchAdvertSuccess(advert));
+                else dispatch(fetchAdvertFailure('Advert not found'));            
+            } catch (error) {
+                dispatch(fetchAdvertFailure(error));
+            }
         }
     }
 );
