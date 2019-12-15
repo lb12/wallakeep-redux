@@ -1,5 +1,44 @@
 # Wallakeep Redux
 
+## Changes v2 (React Avanzado)
+
+### Redux store
+Info stored in the redux store:
+- User session
+- Adverts
+- Current advert that is being edited or seeing in detail
+
+Filters were not added into store because it were not totally necessary for me. However, I let the actions and reducer prepared just to add them if it were necessary or just to have there for the future.
+
+### Redux actions and reducers
+You can debug the actions that are happening with Redux Dev Tools. The project has basic actions:
+- Set user
+- Set filters ( not used like I commented before, but ready to use )
+- Set adverts (Fetch from API)
+- Set current advert
+- Edit advert
+- Create advert
+
+As redux works, all the actions have their reducers, so each action has its own reducer.
+
+### Creating a *Form* and *Input* component
+
+A 'Form' and 'Input' component were created to reuse them in different forms. Because I did not have a lot of time to implement, I just did the basic part like the exercise says (`<Form>` and `<Input>` were only used at `<Login>` (*Register*) component). But at least, it is enough to see how it works. I used HOC and Context techniques to do that.
+
+### Refactor a component to use *hooks*
+
+The exercise asks to refactor a component to use *hooks*, so I refactored the *`AdvertDetail`* component. I let the 'advert' variable into the state to show how *`useState`* method works, but it would not be necessary just because the variable is passed by props with redux store. *`useEffect`* is used to load all the advert info with the advert id passed by path param. I let the previous component commented if you want have it a look.
+
+
+### Testing
+
+All the basic tests were done. 
+
+  - *Sync action*: *SET_USER* and *SET_FILTER* were tested into the actions.test.js
+  - *Async action*: *UPDATE_ADVERT* was tested to see if the action resolved fine.
+  - *Reducer*: check *SET_USER* and check initial adverts state.
+  - *To do a snapshot testing to a component*: *AdvertList* component was tested.
+
 
 ## Introduction
 Wallakeep is a simple Single Page Application (SPA) made with React that emulates an advert selling /buying webpage. It contains a first login, a home page where you can filter by name, price, tag or type (buy, sell) and see rendered the adverts, also you can edit or create new adverts. 
